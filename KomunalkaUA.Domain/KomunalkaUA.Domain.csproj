@@ -3,13 +3,8 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+     
     </PropertyGroup>
-
-    <ItemGroup>
-      <Folder Include="Commands" />
-      <Folder Include="Interfaces" />
-    </ItemGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\KomunalkaUA.Shared\KomunalkaUA.Shared.csproj" />
@@ -19,6 +14,10 @@
       <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
         <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
       </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Telegram.Bot" Version="18.0.0-alpha.2" />
     </ItemGroup>
 
 </Project>

@@ -6,8 +6,8 @@ public class Flat : IAggregateRoot
 {
     public int Id { get; set; }
     public string? CardNumber { get; set; }
-    public int? OwnerId { get; set; }
-    public int? TenantId { get; set; }
+    public long? OwnerId { get; set; }
+    public long? TenantId { get; set; }
     public int? WatterMeterId { get; set; }
     public int? GasMeterId { get; set; }
     public int? ElectricMeterId { get; set; }

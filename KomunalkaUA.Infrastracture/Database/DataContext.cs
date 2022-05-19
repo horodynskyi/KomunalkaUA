@@ -1,4 +1,5 @@
 ﻿using KomunalkaUA.Domain.Models;
+using KomunalkaUA.Infrastracture.Database.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -25,6 +26,14 @@ public class DataContext:DbContext
     public DbSet<WatterMeter> WatterMeters { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+        modelBuilder.ApplyConfiguration(new AddressConfiguration());
+        modelBuilder.ApplyConfiguration(new CheckoutConfiguration());
+        modelBuilder.ApplyConfiguration(new ElectricMeterConfiguration());
+        modelBuilder.ApplyConfiguration(new FlatConfiguration());
+        modelBuilder.ApplyConfiguration(new GasMeterConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
+        modelBuilder.ApplyConfiguration(new TariffConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new WatterMeterConfiguration());
     }
 }

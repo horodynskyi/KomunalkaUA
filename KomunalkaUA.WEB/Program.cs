@@ -1,12 +1,15 @@
 using KomunalkaUA.Domain;
 using KomunalkaUA.Infrastracture;
+using KomunalkaUA.Infrastracture.Database;
 using KomunalkaUA.WEB;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var conn = builder.Configuration;
+builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(conn.GetConnectionString("Postgres")));
 builder.Services
     .AddControllers()
     .AddNewtonsoftJson();
