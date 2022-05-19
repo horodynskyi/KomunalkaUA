@@ -11,10 +11,12 @@ public class Flat : IAggregateRoot
     public int? WatterMeterId { get; set; }
     public int? GasMeterId { get; set; }
     public int? ElectricMeterId { get; set; }
-    
+
     public User? Owner { get; set; } 
     public User? Tenant { get; set; } 
     public WatterMeter? WatterMeter { get; set; }
     public GasMeter? GasMeter { get; set; }
     public ElectricMeter? ElectricMeter { get; set; }
+    
+    public List<Checkout>? Checkouts { get; set; }
 }

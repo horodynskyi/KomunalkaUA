@@ -11,10 +11,10 @@ public static class StartupExtensions
         var lifetime = services.GetRequiredService<IHostApplicationLifetime>();
         lifetime.ApplicationStarted.Register(
             () =>
-            {   
+            {
                 var logger = services.GetRequiredService<ILogger<Program>>();
                 var address = services.GetRequiredService<AppSettings>().WebHookAddress;
-            
+
                 async Task ResetWebHook()
                 {
                     logger.LogInformation("Removing webhook");

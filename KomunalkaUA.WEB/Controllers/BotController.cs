@@ -10,13 +10,10 @@ public class BotController : Controller
 {
     private readonly ITelegramBotClient _client;
     
-        
     public BotController(ITelegramBotClient client)
     {
         _client = client;
     }
-    [HttpGet ("/carinfo")]
-
     [HttpGet]
     public IActionResult Get()
     {
@@ -26,19 +23,8 @@ public class BotController : Controller
     [HttpPost]
     public async Task<IActionResult> Post([FromBody]Update update)
     {
-        if (update == null) return Ok();
+      //  if (update.Message.Text == "/start") await _client.SendTextMessageAsync(update.Message.Chat.Id,"Hello");
 
-        var message = update.Message;
-        var callback = update.CallbackQuery;
-            
-        if (message != null)
-        {
-           
-        }
-        else if (callback != null)
-        {
-           
-        }
           
         return Ok();
     }

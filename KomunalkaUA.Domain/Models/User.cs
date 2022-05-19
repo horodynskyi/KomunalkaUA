@@ -10,4 +10,6 @@ public class User:IAggregateRoot
     public string? PhoneNumber { get; set; }
     public int? RoleId { get; set; }
     public Role? Role { get; set; }
+    public List<Flat> Owners { get; set; }
+    public List<Flat> Tenants { get; set; }
 }
