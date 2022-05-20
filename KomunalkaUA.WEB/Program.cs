@@ -1,13 +1,18 @@
 using KomunalkaUA.Domain;
 using KomunalkaUA.Infrastracture;
+using KomunalkaUA.Infrastracture.Database;
 using KomunalkaUA.WEB;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var conn = builder.Configuration;
-builder.Services.AddControllers();
+builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(conn.GetConnectionString("Postgres")));
+builder.Services
+    .AddControllers()
+    .AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -24,15 +29,13 @@ builder.Services.AddSingleton<ITelegramBotClient>(
     });
 
 var app = builder.Build();
-
+app.UseTelegramBotWebhook();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

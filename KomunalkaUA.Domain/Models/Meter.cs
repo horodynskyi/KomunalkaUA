@@ -1,8 +1,15 @@
-﻿namespace KomunalkaUA.Domain.Models;
+﻿using KomunalkaUA.Domain.Enums;
+using KomunalkaUA.Shared;
 
-public abstract class Meter<T>{
+namespace KomunalkaUA.Domain.Models;
+
+public class Meter: IAggregateRoot
+{
     public int Id { get; set; }
     public string? Number { get; set; }
     public int? Value { get; }
-    public List<T>? Flats { get; set; }
+    public MeterType  MeterType { get; set; }
+    public List<Flat>? ElectricMeters { get; set; }
+    public List<Flat>? GasMeters { get; set; }
+    public List<Flat>? WaterMeter { get; set; }
 }
