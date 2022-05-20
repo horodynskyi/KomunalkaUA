@@ -9,10 +9,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace KomunalkaUA.Infrastracture.Database.Migrations
+namespace KomunalkaUA.Infrastracture.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220519163559_Initial")]
+    [Migration("20220520174622_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,22 +69,6 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
                     b.ToTable("Checkout");
                 });
 
-            modelBuilder.Entity("KomunalkaUA.Domain.Models.ElectricMeter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Number")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ElectricMeters");
-                });
-
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Flat", b =>
                 {
                     b.Property<int>("Id")
@@ -93,6 +77,9 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("CardNumber")
                         .HasColumnType("text");
 
@@ -100,6 +87,15 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("GasMeterId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MeterId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MeterId1")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MeterId2")
                         .HasColumnType("integer");
 
                     b.Property<long?>("OwnerId")
@@ -113,20 +109,22 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ElectricMeterId");
+                    b.HasIndex("AddressId");
 
-                    b.HasIndex("GasMeterId");
+                    b.HasIndex("MeterId");
+
+                    b.HasIndex("MeterId1");
+
+                    b.HasIndex("MeterId2");
 
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("TenantId");
 
-                    b.HasIndex("WatterMeterId");
-
                     b.ToTable("Flats");
                 });
 
-            modelBuilder.Entity("KomunalkaUA.Domain.Models.GasMeter", b =>
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Meter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,12 +132,19 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("MeterType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Number")
                         .HasColumnType("text");
 
+                    b.Property<int?>("Value")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.ToTable("GasMeters");
+                    b.ToTable("Meters");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Role", b =>
@@ -150,12 +155,46 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("RoleType")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleType = "Owner"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleType = "Tenant"
+                        });
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.State", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("StateType")
+                        .HasColumnType("text");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Tariff", b =>
@@ -186,10 +225,7 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
             modelBuilder.Entity("KomunalkaUA.Domain.Models.User", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
@@ -203,27 +239,14 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
                     b.Property<string>("SecondName")
                         .HasColumnType("text");
 
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("KomunalkaUA.Domain.Models.WatterMeter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Number")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WatterMeters");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Checkout", b =>
@@ -243,13 +266,21 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Flat", b =>
                 {
-                    b.HasOne("KomunalkaUA.Domain.Models.ElectricMeter", "ElectricMeter")
+                    b.HasOne("KomunalkaUA.Domain.Models.Address", "Address")
                         .WithMany("Flats")
-                        .HasForeignKey("ElectricMeterId");
+                        .HasForeignKey("AddressId");
 
-                    b.HasOne("KomunalkaUA.Domain.Models.GasMeter", "GasMeter")
-                        .WithMany("Flats")
-                        .HasForeignKey("GasMeterId");
+                    b.HasOne("KomunalkaUA.Domain.Models.Meter", null)
+                        .WithMany("ElectricMeters")
+                        .HasForeignKey("MeterId");
+
+                    b.HasOne("KomunalkaUA.Domain.Models.Meter", null)
+                        .WithMany("WaterMeter")
+                        .HasForeignKey("MeterId1");
+
+                    b.HasOne("KomunalkaUA.Domain.Models.Meter", null)
+                        .WithMany("GasMeters")
+                        .HasForeignKey("MeterId2");
 
                     b.HasOne("KomunalkaUA.Domain.Models.User", "Owner")
                         .WithMany("Owners")
@@ -259,19 +290,20 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
                         .WithMany("Tenants")
                         .HasForeignKey("TenantId");
 
-                    b.HasOne("KomunalkaUA.Domain.Models.WatterMeter", "WatterMeter")
-                        .WithMany("Flats")
-                        .HasForeignKey("WatterMeterId");
-
-                    b.Navigation("ElectricMeter");
-
-                    b.Navigation("GasMeter");
+                    b.Navigation("Address");
 
                     b.Navigation("Owner");
 
                     b.Navigation("Tenant");
+                });
 
-                    b.Navigation("WatterMeter");
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.State", b =>
+                {
+                    b.HasOne("KomunalkaUA.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.User", b =>
@@ -283,7 +315,7 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("KomunalkaUA.Domain.Models.ElectricMeter", b =>
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Address", b =>
                 {
                     b.Navigation("Flats");
                 });
@@ -293,9 +325,13 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
                     b.Navigation("Checkouts");
                 });
 
-            modelBuilder.Entity("KomunalkaUA.Domain.Models.GasMeter", b =>
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Meter", b =>
                 {
-                    b.Navigation("Flats");
+                    b.Navigation("ElectricMeters");
+
+                    b.Navigation("GasMeters");
+
+                    b.Navigation("WaterMeter");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Role", b =>
@@ -313,11 +349,6 @@ namespace KomunalkaUA.Infrastracture.Database.Migrations
                     b.Navigation("Owners");
 
                     b.Navigation("Tenants");
-                });
-
-            modelBuilder.Entity("KomunalkaUA.Domain.Models.WatterMeter", b =>
-                {
-                    b.Navigation("Flats");
                 });
 #pragma warning restore 612, 618
         }

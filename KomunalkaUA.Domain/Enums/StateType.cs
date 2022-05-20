@@ -2,6 +2,10 @@
 
 public enum StateType
 {
+    None = 0,
     Registration,
-    PhoneNumber
+    PhoneNumber,
+    ChoseRole,
+    FlatAddress,
+    WatterMetter
 }

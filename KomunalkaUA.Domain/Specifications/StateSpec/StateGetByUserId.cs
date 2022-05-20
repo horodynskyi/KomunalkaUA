@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using KomunalkaUA.Domain.Models;
 
-namespace KomunalkaUA.Domain.Specifications;
+namespace KomunalkaUA.Domain.Specifications.StateSpec;
 
 public sealed class StateGetByUserId:Specification<State>,ISingleResultSpecification<State>
 {

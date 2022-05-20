@@ -17,10 +17,6 @@ public class StateConfiguration:IEntityTypeConfiguration<State>
             .Property(x => x.Value)
             .HasColumnType("jsonb");
         builder
-            .HasOne(x => x.User)
-            .WithMany(x => x.States)
-            .HasForeignKey(x => x.UserId);
-        builder
             .Property(x => x.StateType)
             .HasConversion(
                 v => v.ToString(),

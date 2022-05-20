@@ -13,5 +13,4 @@ public class User:IAggregateRoot
     public Role? Role { get; set; }
     public List<Flat> Owners { get; set; }
     public List<Flat> Tenants { get; set; }
-    public List<State> States { get; set; }
 }
