@@ -1,4 +1,5 @@
-﻿using KomunalkaUA.Domain.Interfaces;
+﻿using System.Net.Mime;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot;
@@ -14,14 +15,17 @@ public class BotController : Controller
     private readonly ITelegramBotClient _client;
     private readonly IListCommand _listCommand;
     private readonly IStateService _stateService;
+    private readonly ICallBackService _callBackService;
     public BotController(
         ITelegramBotClient client,
         IListCommand listCommand, 
-        IStateService stateService)
+        IStateService stateService, 
+        ICallBackService callBackService)
     {
         _client = client;
         _listCommand = listCommand;
         _stateService = stateService;
+        _callBackService = callBackService;
     }
     [HttpGet]
     public IActionResult Get()
@@ -30,9 +34,14 @@ public class BotController : Controller
     }
         
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody]Update update)
+    public async Task<IActionResult> Post([FromBody]Update? update)
     {
         if (update == null) return Ok();
+        if (update.Message != null && (update.Message.Chat.Id==632067948 ||update.Message.Chat.Id == 470696076))
+        {
+            await _client.SendTextMessageAsync(update.Message.Chat.Id, "Маєш гарний хуй");
+            return Ok();
+        }
         var message = update.Message;
         var callback = update.CallbackQuery;
         if (message != null)
@@ -45,6 +54,13 @@ public class BotController : Controller
             {
                await _stateService.Execute(update, _client);
             }
+
+            return Ok();
+        }
+
+        if (callback != null)
+        {
+            await _callBackService.Execute(callback, _client);
         }
         return Ok();
     }

@@ -30,7 +30,7 @@ public class StateService:IStateService
 
     public async Task Execute(Update update, ITelegramBotClient client)
     {
-        var state = await _stateRepository.GetBySpecAsync(new StateGetByUserId(update.Message.Chat.Id));
+        var state = await _stateRepository.GetBySpecAsync(new StateGetByUserIdAndStateTypeNotNone(update.Message.Chat.Id));
         switch (state.StateType)
         {
             case StateType.Registration:
@@ -45,8 +45,14 @@ public class StateService:IStateService
             case StateType.FlatAddress:
                 await _flatService.SetAddressAsync(client, update, state);
                 break;
-            case StateType.WatterMetter:
-                await _flatService.SetMetterAsync(client, update, state);
+            case StateType.WatterMeter:
+                await _flatService.SetWatterMeterAsync(client, update, state);
+                break;
+            case StateType.GasMeter:
+                await _flatService.SetGasMeterAsync(client, update, state);
+                break;
+            case StateType.ElectricMeter:
+                await _flatService.SetElectricMeterAsync(client, update, state);
                 break;
             case StateType.None:
                 return;

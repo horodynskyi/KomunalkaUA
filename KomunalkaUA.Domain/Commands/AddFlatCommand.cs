@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace KomunalkaUA.Domain.Commands;
 
@@ -28,10 +29,18 @@ public class AddFlatCommand:ITelegramCommand
         var state = new State
         {
             UserId = message.Chat.Id,
-            Value = JsonConvert.SerializeObject(new Flat()),
+            Value = JsonConvert.SerializeObject(
+                new Flat
+                {
+                    OwnerId = message.Chat.Id
+                }),
             StateType = StateType.FlatAddress
         };
         await _stateRepository.AddAsync(state);
+        await client.SendTextMessageAsync(
+            message.Chat.Id,
+            text: $"Ведіть повний адрес квартири",
+            replyMarkup:new ReplyKeyboardRemove());
     }
 
     public bool Contains(Message message)

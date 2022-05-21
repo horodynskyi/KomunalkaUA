@@ -10,9 +10,16 @@ public class AddressConfiguration:IEntityTypeConfiguration<Address>
     {
         builder
             .Property(x => x.Id);
-        /*builder
-            .HasOne(x => x.City)
-            .WithMany(x => x.Addresses)
-            .HasForeignKey(x => x.CityId);*/
+    }
+}
+public class CallbackMessageConfiguration:IEntityTypeConfiguration<CallbackMessage>
+{
+    public void Configure(EntityTypeBuilder<CallbackMessage> builder)
+    {
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .Property(x => x.Id)
+            .ValueGeneratedNever();
     }
 }

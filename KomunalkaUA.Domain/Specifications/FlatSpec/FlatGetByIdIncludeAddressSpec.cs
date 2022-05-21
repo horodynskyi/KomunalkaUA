@@ -3,12 +3,12 @@ using KomunalkaUA.Domain.Models;
 
 namespace KomunalkaUA.Domain.Specifications.FlatSpec;
 
-public class FlatGetByOwnerIdIncludeAddressSpec:Specification<Flat>
+public class FlatGetByIdIncludeAddressSpec:Specification<Flat>,ISingleResultSpecification<Flat>
 {
-    public FlatGetByOwnerIdIncludeAddressSpec(long id)
+    public FlatGetByIdIncludeAddressSpec(int id)
     {
         Query
-            .Where(x => x.OwnerId == id)
+            .Where(x => x.Id == id)
             .Include(x => x.Address);
     }
 }

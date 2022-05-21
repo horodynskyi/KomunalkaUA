@@ -14,7 +14,8 @@ public static class DependencyInjection
             .AddTransient<IListCommand, ListCommand>()
             .AddTransient<IStateService, StateService>()
             .AddTransient<IUserService, UserService>()
-            .AddTransient<IFlatService, FlatService>();
+            .AddTransient<IFlatService, FlatService>()
+            .AddTransient<ICallBackService,CallBackService>();
 
     }
 }

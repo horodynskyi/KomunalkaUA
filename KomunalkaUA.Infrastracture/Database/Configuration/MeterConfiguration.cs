@@ -14,7 +14,8 @@ public class MeterConfiguration:IEntityTypeConfiguration<Meter>
         builder
             .Property(x => x.Number);
         builder
-            .Property(x => x.Value).HasColumnType("integer");
+            .Property(x => x.Value)
+            .HasColumnType("integer");
 
         builder
             .Property(x => x.MeterType)

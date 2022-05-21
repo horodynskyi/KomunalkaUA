@@ -7,5 +7,7 @@ public enum StateType
     PhoneNumber,
     ChoseRole,
     FlatAddress,
-    WatterMetter
+    WatterMeter,
+    ElectricMeter,
+    GasMeter
 }

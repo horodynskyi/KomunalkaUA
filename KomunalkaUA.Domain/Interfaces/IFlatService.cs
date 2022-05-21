@@ -7,5 +7,8 @@ namespace KomunalkaUA.Domain.Interfaces;
 public interface IFlatService
 {
     Task SetAddressAsync(ITelegramBotClient client, Update update, State state);
-    Task SetMetterAsync(ITelegramBotClient client, Update update, State state);
+    Task SetWatterMeterAsync(ITelegramBotClient client, Update update, State state);
+    Task SetGasMeterAsync(ITelegramBotClient client, Update update, State state);
+    Task SetElectricMeterAsync(ITelegramBotClient client, Update update, State state);
+    Task ProccessCallbackAsync(ITelegramBotClient client, CallbackQuery callbackQuery);
 }
