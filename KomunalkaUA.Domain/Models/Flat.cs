@@ -15,5 +15,6 @@ public class Flat : IAggregateRoot
     public User? Tenant { get; set; }
     public Address? Address { get; set; }
     public List<Checkout>? Checkouts { get; set; }
-    public List<FlatMeter> FlatMeters { get; set; }
+    public List<FlatMeter>? FlatMeters { get; set; }
+    public List<FlatPhoto>? Photos { get; set; }
 }

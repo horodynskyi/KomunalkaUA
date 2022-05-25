@@ -12,14 +12,3 @@ public class AddressConfiguration:IEntityTypeConfiguration<Address>
             .Property(x => x.Id);
     }
 }
-public class CallbackMessageConfiguration:IEntityTypeConfiguration<CallbackMessage>
-{
-    public void Configure(EntityTypeBuilder<CallbackMessage> builder)
-    {
-        builder
-            .HasKey(x => x.Id);
-        builder
-            .Property(x => x.Id)
-            .ValueGeneratedNever();
-    }
-}

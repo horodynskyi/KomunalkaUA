@@ -9,5 +9,6 @@ public enum StateType
     FlatAddress,
     WatterMeter,
     ElectricMeter,
-    GasMeter
+    GasMeter,
+    AddPhoto
 }

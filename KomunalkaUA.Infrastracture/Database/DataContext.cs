@@ -24,6 +24,8 @@ public class DataContext:DbContext
     public DbSet<Meter> Meters { get; set; }
     public DbSet<State> States { get; set; }
     public DbSet<CallbackMessage> CallbackMessages { get; set; }
+    public DbSet<Photo> Photos { get; set; }
+    public DbSet<FlatPhoto> FlatPhotos { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new AddressConfiguration());
@@ -36,5 +38,7 @@ public class DataContext:DbContext
         modelBuilder.ApplyConfiguration(new StateConfiguration());
         modelBuilder.ApplyConfiguration(new FlatMeterConfiguration());
         modelBuilder.ApplyConfiguration(new CallbackMessageConfiguration());
+        modelBuilder.ApplyConfiguration(new PhotoConfiguration());
+        modelBuilder.ApplyConfiguration(new FlatPhotoConfiguration());
     }
 }

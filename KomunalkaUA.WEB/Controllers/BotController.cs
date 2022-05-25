@@ -1,6 +1,7 @@
 ﻿using System.Net.Mime;
 using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Services;
+using KomunalkaUA.Domain.Services.StateServices;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -50,7 +51,7 @@ public class BotController : Controller
             {
                 await _listCommand.Execute(message,_client);
             }
-            else if (await _stateService.HasState(update))
+            else if (await _stateService.Contains(update))
             {
                await _stateService.Execute(update, _client);
             }
@@ -60,8 +61,13 @@ public class BotController : Controller
 
         if (callback != null)
         {
-            await _callBackService.Execute(callback, _client);
+            if (_callBackService.Contains(callback.Data))
+            {
+                await _client.AnswerCallbackQueryAsync(callback.Id);
+                await _callBackService.Execute(callback, _client);
+            }
         }
+              
         return Ok();
     }
 }

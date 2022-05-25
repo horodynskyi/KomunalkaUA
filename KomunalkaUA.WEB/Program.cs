@@ -17,10 +17,10 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<AppSettings>(conn.GetSection("Configuration"));
+builder.Services.AddTransient(ser => ser.GetService<IOptions<AppSettings>>().Value);
 builder.Services
     .AddInfrastracture()
     .AddDomain();
-builder.Services.AddTransient(ser => ser.GetService<IOptions<AppSettings>>().Value);
 builder.Services.AddSingleton<ITelegramBotClient>(
     x =>
     {
