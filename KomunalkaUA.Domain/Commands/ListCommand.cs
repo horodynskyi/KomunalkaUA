@@ -11,11 +11,16 @@ public class ListCommand:IListCommand
     private readonly List<ITelegramCommand> _commands;
     public List<ITelegramCommand> Get() => _commands;
     private ITelegramCommand _currentCommand;
-    public ListCommand(IRepository<State> stateRepository,IRepository<Models.User> userRepository)
+    public ListCommand(
+        IRepository<State> stateRepository,
+        IRepository<Models.User> userRepository,
+        IRepository<Flat> flatRepository)
     {
         _commands = new List<ITelegramCommand>
         {
-            new StartCommand(stateRepository,userRepository)
+            new StartCommand(stateRepository,userRepository),
+            new FlatCommand(flatRepository),
+            new AddFlatCommand(flatRepository,stateRepository)
         };
     }
 

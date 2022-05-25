@@ -44,6 +44,19 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.CallbackMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CallbackMessages");
+                });
+
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Checkout", b =>
                 {
                     b.Property<int>("Id")
@@ -81,45 +94,64 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.Property<string>("CardNumber")
                         .HasColumnType("text");
 
-                    b.Property<int?>("ElectricMeterId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("GasMeterId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("MeterId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("MeterId1")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("MeterId2")
-                        .HasColumnType("integer");
-
                     b.Property<long?>("OwnerId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("TenantId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("WatterMeterId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("MeterId");
-
-                    b.HasIndex("MeterId1");
-
-                    b.HasIndex("MeterId2");
 
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("TenantId");
 
                     b.ToTable("Flats");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.FlatMeter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("FlatId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MetterId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlatId");
+
+                    b.HasIndex("MetterId");
+
+                    b.ToTable("FlatMeter");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.FlatPhoto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("FlatId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PhotoId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlatId");
+
+                    b.HasIndex("PhotoId");
+
+                    b.ToTable("FlatPhotos");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Meter", b =>
@@ -143,6 +175,21 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Meters");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Role", b =>
@@ -180,6 +227,7 @@ namespace KomunalkaUA.Infrastracture.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("StateType")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<long?>("UserId")
@@ -268,18 +316,6 @@ namespace KomunalkaUA.Infrastracture.Migrations
                         .WithMany("Flats")
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("KomunalkaUA.Domain.Models.Meter", null)
-                        .WithMany("ElectricMeters")
-                        .HasForeignKey("MeterId");
-
-                    b.HasOne("KomunalkaUA.Domain.Models.Meter", null)
-                        .WithMany("WaterMeter")
-                        .HasForeignKey("MeterId1");
-
-                    b.HasOne("KomunalkaUA.Domain.Models.Meter", null)
-                        .WithMany("GasMeters")
-                        .HasForeignKey("MeterId2");
-
                     b.HasOne("KomunalkaUA.Domain.Models.User", "Owner")
                         .WithMany("Owners")
                         .HasForeignKey("OwnerId");
@@ -293,6 +329,36 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.Navigation("Owner");
 
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.FlatMeter", b =>
+                {
+                    b.HasOne("KomunalkaUA.Domain.Models.Flat", "Flat")
+                        .WithMany("FlatMeters")
+                        .HasForeignKey("FlatId");
+
+                    b.HasOne("KomunalkaUA.Domain.Models.Meter", "Meter")
+                        .WithMany("FlatMeters")
+                        .HasForeignKey("MetterId");
+
+                    b.Navigation("Flat");
+
+                    b.Navigation("Meter");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.FlatPhoto", b =>
+                {
+                    b.HasOne("KomunalkaUA.Domain.Models.Flat", "Flat")
+                        .WithMany("Photos")
+                        .HasForeignKey("FlatId");
+
+                    b.HasOne("KomunalkaUA.Domain.Models.Photo", "Photo")
+                        .WithMany("FlatPhotos")
+                        .HasForeignKey("PhotoId");
+
+                    b.Navigation("Flat");
+
+                    b.Navigation("Photo");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.State", b =>
@@ -321,15 +387,20 @@ namespace KomunalkaUA.Infrastracture.Migrations
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Flat", b =>
                 {
                     b.Navigation("Checkouts");
+
+                    b.Navigation("FlatMeters");
+
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Meter", b =>
                 {
-                    b.Navigation("ElectricMeters");
+                    b.Navigation("FlatMeters");
+                });
 
-                    b.Navigation("GasMeters");
-
-                    b.Navigation("WaterMeter");
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Photo", b =>
+                {
+                    b.Navigation("FlatPhotos");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Role", b =>

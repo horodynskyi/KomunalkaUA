@@ -24,16 +24,16 @@ public class FlatCommand:ITelegramCommand
     {
         string text;
         IReplyMarkup replyMarkup;
-        var flats = await _repository.GetBySpecAsync(new FlatGetByOwnerIdSpec(message.Chat.Id));
-        if (flats ==null) 
+        var flats = await _repository.ListAsync(new FlatGetByOwnerIdIncludeAddressSpec(message.Chat.Id),CancellationToken.None);
+        if (flats.Count==0) 
         {
-            text = "Ви ще не додали жодної квартири, щоб додати квартиру натистіть кнопку Додати квариту";
+            text = "Ви ще не додали жодної квартири, щоб додати квартиру натистіть кнопку Додати квартиру";
             replyMarkup = KeyboardService.GetStartOwnerButtons();
         }
         else
         {
-            text = "";
-            replyMarkup = KeyboardService.GetRolesButtons();
+            text = $"Квартири {message.Chat.Username}:";
+            replyMarkup = KeyboardService.CreateListFlatInlineKeyboardMarkup(flats);
         }
         await client.SendTextMessageAsync(
             message.Chat.Id,

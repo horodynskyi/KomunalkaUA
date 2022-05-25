@@ -27,12 +27,20 @@ public class StartCommand:ITelegramCommand
         var text = $"Ласкаво просимо до бота KomunalkaUA 🇺🇦 \n " +
                    $"Наш бот дозволяє автоматизувати спілкування між орендодавцем і орендувальником квартир \n " +
                    $"Для початку введіть ваше призвіще та ім'я:";
-        var user = new User
+        var user = await _userRepository.GetByIdAsync(message.Chat.Id);
+        if (user == null)
         {
-            Id = message.Chat.Id
-        };
-        if (await _userRepository.GetByIdAsync(user.Id)==null)
+            user = new User()
+            {
+                Id = message.Chat.Id
+            };
             await _userRepository.AddAsync(user);
+           
+        }
+        else if (user.RoleId ==(int?) RoleType.Owner)
+        {
+            
+        }
         var state = new State
         {
 
@@ -41,6 +49,7 @@ public class StartCommand:ITelegramCommand
         };
         await _repository.AddAsync(state);
         await client.SendTextMessageAsync(message.Chat.Id, text);
+       
 
     }
     public bool Contains(Message message)

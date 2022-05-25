@@ -10,6 +10,6 @@ public class State:IAggregateRoot
     public long? UserId { get; set; }
  
     public string? Value { get; set; }
-    public StateType? StateType { get; set; }
+    public StateType StateType { get; set; }
     public User? User { get; set; }
 }

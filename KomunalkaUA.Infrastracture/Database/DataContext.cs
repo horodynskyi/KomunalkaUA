@@ -23,17 +23,22 @@ public class DataContext:DbContext
     public DbSet<Tariff> Tariffs { get; set; }
     public DbSet<Meter> Meters { get; set; }
     public DbSet<State> States { get; set; }
+    public DbSet<CallbackMessage> CallbackMessages { get; set; }
+    public DbSet<Photo> Photos { get; set; }
+    public DbSet<FlatPhoto> FlatPhotos { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new AddressConfiguration());
         modelBuilder.ApplyConfiguration(new CheckoutConfiguration());
         modelBuilder.ApplyConfiguration(new MeterConfiguration());
         modelBuilder.ApplyConfiguration(new FlatConfiguration());
-       // modelBuilder.ApplyConfiguration(new GasMeterConfiguration());
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new TariffConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
-       // modelBuilder.ApplyConfiguration(new WatterMeterConfiguration());
         modelBuilder.ApplyConfiguration(new StateConfiguration());
+        modelBuilder.ApplyConfiguration(new FlatMeterConfiguration());
+        modelBuilder.ApplyConfiguration(new CallbackMessageConfiguration());
+        modelBuilder.ApplyConfiguration(new PhotoConfiguration());
+        modelBuilder.ApplyConfiguration(new FlatPhotoConfiguration());
     }
 }

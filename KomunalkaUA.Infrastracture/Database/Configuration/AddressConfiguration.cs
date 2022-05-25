@@ -10,9 +10,5 @@ public class AddressConfiguration:IEntityTypeConfiguration<Address>
     {
         builder
             .Property(x => x.Id);
-        /*builder
-            .HasOne(x => x.City)
-            .WithMany(x => x.Addresses)
-            .HasForeignKey(x => x.CityId);*/
     }
 }

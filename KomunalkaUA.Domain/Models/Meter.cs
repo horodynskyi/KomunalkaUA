@@ -7,9 +7,7 @@ public class Meter: IAggregateRoot
 {
     public int Id { get; set; }
     public string? Number { get; set; }
-    public int? Value { get; }
+    public int? Value { get; set; }
     public MeterType  MeterType { get; set; }
-    public List<Flat>? ElectricMeters { get; set; }
-    public List<Flat>? GasMeters { get; set; }
-    public List<Flat>? WaterMeter { get; set; }
+    public List<FlatMeter>? FlatMeters { get; set; }
 }
