@@ -4,7 +4,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace KomunalkaUA.Domain.Services;
 
-public class KeyboardService
+public class KeyboardServicec
 {
     public static ReplyKeyboardMarkup GetShareContactButton()
     {

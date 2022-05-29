@@ -1,6 +1,8 @@
 ﻿using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
 using KomunalkaUA.Domain.Services.Callback.FlatCallbacks.Interfaces;
+using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
+using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -12,12 +14,20 @@ public class ListFlatCallback
     private ICallback _currentCallback;
     public ListFlatCallback(
         IFlatDetailCallback flatDetailCallback,
-        IFlatListCallback flatListCallback)
+        IFlatListCallback flatListCallback,
+        IFlatEditCallback flatEditCallback,
+        IFlatRentCallback flatRentCallback,
+        IFlatRentAddCallback flatRentAddCallback,
+        IFlatCardCallback flatCardCallback)
     {
         _callbacks = new List<ICallback>()
         {
             flatDetailCallback,
-            flatListCallback
+            flatListCallback,
+            flatEditCallback,
+            flatRentCallback,
+            flatRentAddCallback,
+            flatCardCallback
         };
     }
 

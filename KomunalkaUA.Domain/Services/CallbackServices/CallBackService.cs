@@ -3,7 +3,7 @@ using KomunalkaUA.Domain.Services.Lists;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace KomunalkaUA.Domain.Services;
+namespace KomunalkaUA.Domain.Services.CallbackServices;
 
 public class CallBackService:ICallBackService
 {
@@ -18,7 +18,6 @@ public class CallBackService:ICallBackService
     {
         
         await _callBackServices.Execute(callbackQuery, client);
-        
     }
 
     public bool Contains(string callbackData)

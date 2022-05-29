@@ -28,12 +28,12 @@ public class FlatCommand:ITelegramCommand
         if (flats.Count==0) 
         {
             text = "Ви ще не додали жодної квартири, щоб додати квартиру натистіть кнопку Додати квартиру";
-            replyMarkup = KeyboardService.GetStartOwnerButtons();
+            replyMarkup = KeyboardServicec.GetStartOwnerButtons();
         }
         else
         {
             text = $"Квартири {message.Chat.Username}:";
-            replyMarkup = KeyboardService.CreateListFlatInlineKeyboardMarkup(flats);
+            replyMarkup = KeyboardServicec.CreateListFlatInlineKeyboardMarkup(flats);
         }
         await client.SendTextMessageAsync(
             message.Chat.Id,

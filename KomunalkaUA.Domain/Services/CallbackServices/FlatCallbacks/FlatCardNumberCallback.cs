@@ -1,15 +1,16 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.Callback.FlatCallbacks.Interfaces;
+using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks.Interfaces;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
 using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
+namespace KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
 
-public class FlatCardNumberCallback:IFlatCardNumberCallback
+/*public class FlatCardNumberCallback:IFlatCardNumberCallback
 {
     private IRepository<Flat> _flatRepository;
     private readonly string _callback = "flat-card";
@@ -27,12 +28,12 @@ public class FlatCardNumberCallback:IFlatCardNumberCallback
         if (string.IsNullOrEmpty(flat.CardNumber))
         {
             text = "Ви не додали ще карту для перевода коштів!";
-            keys = KeyboardService.CreateFlatCardInlineKeyboardButton(flat, CardType.Add);
+            keys = KeyboardServicec.CreateFlatCardInlineKeyboardButton(flat, CardType.Add);
         }
         else
         {
             text = "Ваша карта для перевода коштів:";
-            keys = KeyboardService.CreateFlatBackToDetailInlineKeyboardMarkup(flat);
+            keys = KeyboardServicec.CreateFlatBackToDetailInlineKeyboardMarkup(flat);
         }
         await client.EditMessageTextAsync(
             callbackQuery.From.Id,
@@ -55,4 +56,4 @@ public class FlatCardNumberCallback:IFlatCardNumberCallback
 
         return false;
     }
-}
+}*/

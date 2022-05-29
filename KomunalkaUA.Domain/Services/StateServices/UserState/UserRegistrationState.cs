@@ -38,7 +38,7 @@ public class UserRegistrationState:IUserRegistrationState
         state.StateType = StateType.PhoneNumber;
         await _stateRepository.UpdateAsync(state);
         await client.SendTextMessageAsync(update.Message.Chat.Id, text,
-            replyMarkup: KeyboardService.GetShareContactButton());
+            replyMarkup: KeyboardServicec.GetShareContactButton());
     }
 
     public  bool Contains(StateType stateType)

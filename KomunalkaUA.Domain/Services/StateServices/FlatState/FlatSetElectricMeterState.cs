@@ -50,7 +50,7 @@ public class FlatSetElectricMeterState : IFlatSetElectricMeterState
         await client.SendTextMessageAsync(
             update.Message.Chat.Id,
             text,
-            replyMarkup:KeyboardService.GetStartOwnerButtons());
+            replyMarkup:KeyboardServicec.GetStartOwnerButtons());
     }
 
     public bool Contains(StateType stateType)

@@ -3,9 +3,8 @@ using KomunalkaUA.Domain.Specifications.FlatSpec;
 using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
 
-namespace KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
+namespace KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
 
 public class FlatListCallback:IFlatListCallback
 {
@@ -25,13 +24,13 @@ public class FlatListCallback:IFlatListCallback
             callbackQuery.From.Id,
             callbackQuery.Message.MessageId,
             text:text,
-            replyMarkup:KeyboardService.CreateListFlatInlineKeyboardMarkup(flats)
+            replyMarkup:KeyboardServicec.CreateListFlatInlineKeyboardMarkup(flats)
         );
     }
 
     public bool Contains(string callbackData)
     {
-        if (callbackData.Contains(_callback))
+        if (callbackData.Split()[0]==_callback)
         {
             return true;
         }

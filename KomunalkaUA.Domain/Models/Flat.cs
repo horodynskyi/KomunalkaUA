@@ -9,6 +9,7 @@ public class Flat : IAggregateRoot
     public long? OwnerId { get; set; }
     public long? TenantId { get; set; }
     public int? AddressId { get; set; }
+    public int? Rent { get; set; }
     
 
     public User? Owner { get; set; } 

@@ -32,7 +32,7 @@ public class StateService:IStateService
     public async Task<bool> Contains(Update update)
     {
         _state = await _stateRepository.GetBySpecAsync(new StateGetByUserIdAndStateTypeNotNone(update.Message.Chat.Id));
-        if (_state.StateType == StateType.None)
+        if (_state != null && _state.StateType == StateType.None)
             return false;
         if (_state != null && _listState.Contains(_state.StateType))
             return true;

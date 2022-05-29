@@ -97,6 +97,9 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.Property<long?>("OwnerId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("Rent")
+                        .HasColumnType("integer");
+
                     b.Property<long?>("TenantId")
                         .HasColumnType("bigint");
 

@@ -1,9 +1,12 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.StateServices;
+using KomunalkaUA.Domain.Services.StateServices.FlatState;
 using KomunalkaUA.Domain.Services.StateServices.FlatState.Interfaces;
 using KomunalkaUA.Domain.Services.StateServices.UserState;
 using KomunalkaUA.Domain.Services.StateServices.UserState.Interfaces;
+using KomunalkaUA.Domain.Services.StateServices.UserState.OwnerState.Interfaces;
+using KomunalkaUA.Domain.Services.StateServices.UserState.TenantState;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -20,7 +23,10 @@ public class ListState
         IFlatSetAddressState flatSetAddressState,
         IFlatSetWatterState flatSetWatterState,
         IFlatSetElectricMeterState flatSetElectricMeterState,
-        IFlatSetGasMeterState flatSetGasMeterState
+        IFlatSetGasMeterState flatSetGasMeterState,
+        ITenantAutorizeFlatState tenantAutorizeFlatState,
+        IOwnerAddCardState ownerAddCardState,
+        IFlatRentState flatRentState
     ) 
     {
         _states = new List<IState>()
@@ -31,7 +37,10 @@ public class ListState
             flatSetAddressState,
             flatSetWatterState,
             flatSetElectricMeterState,
-            flatSetGasMeterState
+            flatSetGasMeterState,
+            tenantAutorizeFlatState,
+            ownerAddCardState,
+            flatRentState
         };
     }
 

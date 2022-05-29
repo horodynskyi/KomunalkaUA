@@ -29,7 +29,7 @@ public class UserAddPhoneNumberState:IUserAddPhoneNumberState
         await client.SendTextMessageAsync(
             update.Message.Chat.Id, 
             text, 
-            replyMarkup: KeyboardService.GetRolesButtons());
+            replyMarkup: KeyboardServicec.GetRolesButtons());
     }
 
     public bool Contains(StateType stateType)

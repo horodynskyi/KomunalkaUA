@@ -4,6 +4,11 @@ using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Services;
 using KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
 using KomunalkaUA.Domain.Services.Callback.FlatCallbacks.Interfaces;
+using KomunalkaUA.Domain.Services.CallbackServices;
+using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
+using KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
+using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
+using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.Lists;
 using KomunalkaUA.Domain.Services.StateServices;
 using KomunalkaUA.Domain.Services.StateServices.FlatState;
@@ -13,7 +18,7 @@ using KomunalkaUA.Domain.Services.StateServices.PhotoState.Interfaces;
 using KomunalkaUA.Domain.Services.StateServices.UserState;
 using KomunalkaUA.Domain.Services.StateServices.UserState.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+
 
 namespace KomunalkaUA.Domain;
 
@@ -29,8 +34,11 @@ public static class DependencyInjection
         service.AddTransient<ListCallbackServices>();
         service.AddTransient<ListCallbackServices>();
         service.AddTransient<ListFlatCallback>();
+        service.AddTransient<ListUserCallback>();
         service.AddTransient<ListState>();
         service.AddTransient<IFlatCallBackService, FlatCallbackService>();
+        service.AddTransient<IUserCallbackService, UserCallbackService>();
+        service.AddTransient<IKeyboardService, KeyboardService>();
         service.AddState();
         service.AddCallback();
      

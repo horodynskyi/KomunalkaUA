@@ -34,14 +34,25 @@ public class UserChooseRoleState:IUserChooseRoleState
                 user.RoleId = (int?) RoleType.Owner;
                 text = $"Круто роль обрано!{update.Message.Text}\n" +
                        $"Тепер Ви можете додавати квартири і також переглядати інформацію про них:";
-                keys = KeyboardService.GetStartOwnerButtons();
+                keys = KeyboardServicec.GetStartOwnerButtons();
                 break;
             case "Орендувальник":
                 user.RoleId = (int?) RoleType.Tenant;
-                text = $"Круто роль обрано!{update.Message.Text}";
-                keys = KeyboardService.GetStartTenantButtons();
+                text = "Круто, Ваша роль Орендувальник!" +
+                           "\nЩоб авторизувати квартиру, яку ви хочете орендувати потрібно ввести номер телефона власника квартири:";
+                var stateTenant = new State()
+                {
+                    UserId = update.Message.Chat.Id,
+                    StateType = StateType.TenantAuthorizeFlat
+                };
+                await _stateRepository.AddAsync(stateTenant);
+                keys = new ReplyKeyboardRemove();
                 break;
-            default: return;
+            default:
+                await client.SendTextMessageAsync(
+                    update.Message.Chat.Id,
+                    "Виберість свою роль!");
+                return;
         }
 
         await _userRepository.UpdateAsync(user);

@@ -1,5 +1,7 @@
 ﻿using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
+using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
+using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -11,12 +13,14 @@ public class ListCallbackServices
     private ICallBackService _currentService;
 
     public ListCallbackServices(
-        IFlatCallBackService flatCallBackService
+        IFlatCallBackService flatCallBackService,
+        IUserCallbackService userCallbackService
     )
     {
         _callbackServices = new List<ICallBackService>()
         {
-            flatCallBackService
+            flatCallBackService,
+            userCallbackService
         };
     }
 

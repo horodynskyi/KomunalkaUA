@@ -1,14 +1,10 @@
-﻿using KomunalkaUA.Domain.Enums;
-using KomunalkaUA.Domain.Interfaces;
-using KomunalkaUA.Domain.Models;
+﻿using KomunalkaUA.Domain.Interfaces;
+using KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
 using KomunalkaUA.Domain.Services.Lists;
-using KomunalkaUA.Domain.Specifications.FlatSpec;
-using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
 
-namespace KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
+namespace KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
 
 public class FlatCallbackService:IFlatCallBackService
 {
@@ -32,4 +28,3 @@ public class FlatCallbackService:IFlatCallBackService
 public interface IFlatCallBackService:ICallBackService
 {
 }
-
