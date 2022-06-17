@@ -2,7 +2,7 @@
 
 namespace KomunalkaUA.Domain.Services.StateServices.FlatState.Interfaces;
 
-public interface IFlatSetGasMeterState:IState
+public interface IFlatSetMeterState:IState
 {
     
 }

@@ -1,5 +1,7 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Models;
+using KomunalkaUA.Domain.Services.KeyboardServices;
+using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.UserState.Interfaces;
 using KomunalkaUA.Shared;
 using Newtonsoft.Json;
@@ -14,13 +16,16 @@ public class UserChooseRoleState:IUserChooseRoleState
 {
     private readonly IRepository<User> _userRepository;
     private readonly IRepository<State> _stateRepository;
+    private readonly IKeyboardService _keyboardService;
 
     public UserChooseRoleState(
         IRepository<User> userRepository, 
-        IRepository<State> stateRepository)
+        IRepository<State> stateRepository, 
+        IKeyboardService keyboardService)
     {
         _userRepository = userRepository;
         _stateRepository = stateRepository;
+        _keyboardService = keyboardService;
     }
 
     public async Task ExecuteAsync(ITelegramBotClient client, Update update, State state)
@@ -34,19 +39,30 @@ public class UserChooseRoleState:IUserChooseRoleState
                 user.RoleId = (int?) RoleType.Owner;
                 text = $"Круто роль обрано!{update.Message.Text}\n" +
                        $"Тепер Ви можете додавати квартири і також переглядати інформацію про них:";
-                keys = KeyboardService.GetStartOwnerButtons();
+                keys = _keyboardService.GetKeys(new UserGetStartOwnerButtonsKeyboardCommand());
                 break;
             case "Орендувальник":
                 user.RoleId = (int?) RoleType.Tenant;
-                text = $"Круто роль обрано!{update.Message.Text}";
-                keys = KeyboardService.GetStartTenantButtons();
+                text = "Круто, Ваша роль Орендувальник!" +
+                           "\nЩоб авторизувати квартиру, яку ви хочете орендувати потрібно ввести номер телефона власника квартири:";
+                var stateTenant = new State()
+                {
+                    UserId = update.Message.Chat.Id,
+                    StateType = StateType.TenantAuthorizeFlat
+                };
+                await _stateRepository.AddAsync(stateTenant);
+                keys = new ReplyKeyboardRemove();
                 break;
-            default: return;
+            default:
+                await client.SendTextMessageAsync(
+                    update.Message.Chat.Id,
+                    "Виберість свою роль!");
+                return;
         }
 
         await _userRepository.UpdateAsync(user);
         state.Value = JsonConvert.SerializeObject(user);
-        state.StateType = StateType.None;
+      
         await _stateRepository.DeleteAsync(state);
         await client.SendTextMessageAsync(
             update.Message.Chat.Id, 

@@ -18,10 +18,14 @@ public class MeterConfiguration:IEntityTypeConfiguration<Meter>
             .HasColumnType("integer");
 
         builder
+            .HasOne(x => x.Provider)
+            .WithMany(x => x.Meters)
+            .HasForeignKey(x => x.ProviderId);
+        /*builder
             .Property(x => x.MeterType)
             .HasConversion(
-                v => v.ToString(),
-                v => (MeterType) Enum.Parse(typeof(MeterType), v)
-            );
+                v => v
+                v => (MeterType) v);
+            );*/
     }
 }

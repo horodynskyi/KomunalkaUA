@@ -1,5 +1,7 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Models;
+using KomunalkaUA.Domain.Services.KeyboardServices;
+using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.UserState.Interfaces;
 using KomunalkaUA.Shared;
 using Newtonsoft.Json;
@@ -12,21 +14,23 @@ namespace KomunalkaUA.Domain.Services.StateServices.UserState;
 public class UserRegistrationState:IUserRegistrationState
 {
     private readonly IRepository<State> _stateRepository;
+    private readonly IKeyboardService _keyboardService;
 
     public UserRegistrationState(
-        IRepository<State> stateRepository
-        )
+        IRepository<State> stateRepository, 
+        IKeyboardService keyboardService)
     {
         _stateRepository = stateRepository;
+        _keyboardService = keyboardService;
     }
 
-    public async Task ExecuteAsync(ITelegramBotClient client, Update update, Models.State state)
+    public async Task ExecuteAsync(ITelegramBotClient client, Update update, State state)
     {
         var text = "Дякую! Ваші дані збережено. 💾\n" +
                    "Тепер напишіть ваш номер телефону:";
-        Models.User user;
+        User user;
         if (state.Value == null) 
-            user = new Models.User();
+            user = new User();
         else 
             user = JsonConvert.DeserializeObject<User>(state.Value);
         (string firstName, string secondName) = (update.Message.Text.Split()[0],update.Message.Text.Split()[1]);
@@ -38,7 +42,7 @@ public class UserRegistrationState:IUserRegistrationState
         state.StateType = StateType.PhoneNumber;
         await _stateRepository.UpdateAsync(state);
         await client.SendTextMessageAsync(update.Message.Chat.Id, text,
-            replyMarkup: KeyboardService.GetShareContactButton());
+            replyMarkup: _keyboardService.GetKeys(new UserGetShareButtonKeyboardCommand()));
     }
 
     public  bool Contains(StateType stateType)

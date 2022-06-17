@@ -38,7 +38,7 @@ public class FlatSetElectricMeterState : IFlatSetElectricMeterState
         {
             Number = number,
             Value = Int32.Parse(value),
-            MeterType = MeterType.Electric
+          //  MeterType = MeterType.Electric
         };
         await _flatMeterRepository.AddAsync(new FlatMeter
         {
@@ -47,10 +47,10 @@ public class FlatSetElectricMeterState : IFlatSetElectricMeterState
         });
         state.StateType = StateType.None;
         await _stateRepository.DeleteAsync(state);
-        await client.SendTextMessageAsync(
+        /*await client.SendTextMessageAsync(
             update.Message.Chat.Id,
             text,
-            replyMarkup:KeyboardService.GetStartOwnerButtons());
+            replyMarkup:KeyboardServicec.GetStartOwnerButtons());*/
     }
 
     public bool Contains(StateType stateType)

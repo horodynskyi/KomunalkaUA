@@ -25,14 +25,14 @@ public class StateService:IStateService
 
     public async Task Execute(Update update, ITelegramBotClient client)
     {
-        var state = await _stateRepository.GetBySpecAsync(new StateGetByUserIdAndStateTypeNotNone(update.Message.Chat.Id));
+        var state = await _stateRepository.GetBySpecAsync(new StateGetByUserId(update.Message.Chat.Id));
         await _listState.ExecuteAsync(update, client, state);
     }
     
     public async Task<bool> Contains(Update update)
     {
         _state = await _stateRepository.GetBySpecAsync(new StateGetByUserIdAndStateTypeNotNone(update.Message.Chat.Id));
-        if (_state.StateType == StateType.None)
+        if (_state != null && _state.StateType == StateType.None)
             return false;
         if (_state != null && _listState.Contains(_state.StateType))
             return true;

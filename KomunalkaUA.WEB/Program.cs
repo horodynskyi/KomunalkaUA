@@ -7,13 +7,12 @@ using Microsoft.Extensions.Options;
 using Telegram.Bot;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 var conn = builder.Configuration;
 builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(conn.GetConnectionString("Postgres")));
 builder.Services
     .AddControllers()
-    .AddNewtonsoftJson();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<AppSettings>(conn.GetSection("Configuration"));
@@ -30,13 +29,11 @@ builder.Services.AddSingleton<ITelegramBotClient>(
 
 var app = builder.Build();
 app.UseTelegramBotWebhook();
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseAuthorization();
 
 app.MapControllers();

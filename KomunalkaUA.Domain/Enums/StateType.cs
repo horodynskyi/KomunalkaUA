@@ -10,5 +10,12 @@ public enum StateType
     WatterMeter,
     ElectricMeter,
     GasMeter,
-    AddPhoto
+    AddPhoto,
+    TenantAuthorizeFlat,
+    AddCardNumber,
+    Rent,
+    FlatStreet,
+    FlatBuilding,
+    FlatFlatNumber,
+    ValueMeter
 }

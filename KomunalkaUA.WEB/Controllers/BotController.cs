@@ -1,11 +1,9 @@
-﻿using System.Net.Mime;
-using KomunalkaUA.Domain.Interfaces;
-using KomunalkaUA.Domain.Services;
+﻿using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Services.StateServices;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot;
+using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace KomunalkaUA.WEB.Controllers;
 
@@ -63,7 +61,15 @@ public class BotController : Controller
         {
             if (_callBackService.Contains(callback.Data))
             {
-                await _client.AnswerCallbackQueryAsync(callback.Id);
+                try
+                {
+                    await _client.AnswerCallbackQueryAsync(callback.Id);
+                }
+                catch (ApiRequestException exception)
+                {
+                    Console.WriteLine(exception.HttpStatusCode);
+                }
+              
                 await _callBackService.Execute(callback, _client);
             }
         }

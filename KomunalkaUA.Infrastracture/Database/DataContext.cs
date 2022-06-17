@@ -26,8 +26,12 @@ public class DataContext:DbContext
     public DbSet<CallbackMessage> CallbackMessages { get; set; }
     public DbSet<Photo> Photos { get; set; }
     public DbSet<FlatPhoto> FlatPhotos { get; set; }
+    public DbSet<Provider> Providers { get; set; }
+    public DbSet<City> Cities { get; set; }
+    public DbSet<MeterType> MeterTypes { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        
         modelBuilder.ApplyConfiguration(new AddressConfiguration());
         modelBuilder.ApplyConfiguration(new CheckoutConfiguration());
         modelBuilder.ApplyConfiguration(new MeterConfiguration());
@@ -40,5 +44,12 @@ public class DataContext:DbContext
         modelBuilder.ApplyConfiguration(new CallbackMessageConfiguration());
         modelBuilder.ApplyConfiguration(new PhotoConfiguration());
         modelBuilder.ApplyConfiguration(new FlatPhotoConfiguration());
+        modelBuilder.ApplyConfiguration(new CityConfiguration());
+        modelBuilder.ApplyConfiguration(new ProviderConfiguration());
+        modelBuilder.ApplyConfiguration(new MeterTypeConfiguration());
     }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+      {
+          optionsBuilder.EnableSensitiveDataLogging();
+      }
 }

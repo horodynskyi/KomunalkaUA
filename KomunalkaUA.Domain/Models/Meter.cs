@@ -1,5 +1,6 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Shared;
+using Newtonsoft.Json;
 
 namespace KomunalkaUA.Domain.Models;
 
@@ -7,7 +8,10 @@ public class Meter: IAggregateRoot
 {
     public int Id { get; set; }
     public string? Number { get; set; }
-    public int? Value { get; set; }
-    public MeterType  MeterType { get; set; }
+    public int? Value { get; set; } //TODO
+    public int? ProviderId { get; set; }
+    public Provider? Provider { get; set; }
+    [JsonIgnore]
     public List<FlatMeter>? FlatMeters { get; set; }
+  
 }

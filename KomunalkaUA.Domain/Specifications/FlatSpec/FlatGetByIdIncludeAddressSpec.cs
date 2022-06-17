@@ -8,7 +8,7 @@ public class FlatGetByIdIncludeAddressSpec:Specification<Flat>,ISingleResultSpec
     public FlatGetByIdIncludeAddressSpec(int id)
     {
         Query
-            .Where(x => x.Id == id)
-            .Include(x => x.Address);
+            .Include(x => x.Address)
+            .Where(x => x.Id == id);
     }
 }
