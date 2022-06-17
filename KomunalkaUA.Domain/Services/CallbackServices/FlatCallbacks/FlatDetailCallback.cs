@@ -43,6 +43,7 @@ public class FlatDetailCallback:IFlatDetailCallback
         if (callbackData.Contains(_callback))
         {
             _flatId = Int32.Parse(msg[1]);
+         
             return true;
         }
 

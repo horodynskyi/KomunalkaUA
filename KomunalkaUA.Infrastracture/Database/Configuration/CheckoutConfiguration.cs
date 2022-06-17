@@ -11,12 +11,8 @@ public class CheckoutConfiguration:IEntityTypeConfiguration<Checkout>
         builder
             .HasKey(x => x.Id);
         builder
-            .HasOne(x => x.Flat)
+            .HasOne(x => x.FlatMeter)
             .WithMany(x => x.Checkouts)
-            .HasForeignKey(x => x.FlatId);
-        builder
-            .HasOne(x => x.Tariff)
-            .WithMany(x => x.Checkouts)
-            .HasForeignKey(x => x.TariffId);
+            .HasForeignKey(x => x.FlatMeterId);
     }
 }

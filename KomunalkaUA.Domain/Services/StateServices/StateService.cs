@@ -25,7 +25,7 @@ public class StateService:IStateService
 
     public async Task Execute(Update update, ITelegramBotClient client)
     {
-        var state = await _stateRepository.GetBySpecAsync(new StateGetByUserIdAndStateTypeNotNone(update.Message.Chat.Id));
+        var state = await _stateRepository.GetBySpecAsync(new StateGetByUserId(update.Message.Chat.Id));
         await _listState.ExecuteAsync(update, client, state);
     }
     

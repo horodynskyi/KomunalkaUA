@@ -2,11 +2,11 @@
 
 namespace KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 
-public class TenantStartKeyboardCommand:IKeyboardCommand
+public class TenantCardKeyboardCommand:IKeyboardCommand
 {
     public long? OwnerId;
 
-    public TenantStartKeyboardCommand(long? ownerId)
+    public TenantCardKeyboardCommand(long? ownerId)
     {
         OwnerId = ownerId;
     }

@@ -1,26 +1,28 @@
 ﻿using KomunalkaUA.Domain.Interfaces;
-using KomunalkaUA.Domain.Models;
-using KomunalkaUA.Shared;
+using KomunalkaUA.Domain.Services.CommandService;
+using KomunalkaUA.Domain.Services.CommandService.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace KomunalkaUA.Domain.Commands;
+namespace KomunalkaUA.Domain.Services.Lists;
 
 public class ListCommand:IListCommand
 {
     private readonly List<ITelegramCommand> _commands;
-    public List<ITelegramCommand> Get() => _commands;
     private ITelegramCommand _currentCommand;
     public ListCommand(
-        IRepository<State> stateRepository,
-        IRepository<Models.User> userRepository,
-        IRepository<Flat> flatRepository)
+        IAddFlatCommand addFlatCommand,
+        IFlatCommand flatCommand,
+        IStartCommand startCommand,
+        ITenantCommand tenantCommand
+        )
     {
         _commands = new List<ITelegramCommand>
         {
-            new StartCommand(stateRepository,userRepository),
-            new FlatCommand(flatRepository),
-            new AddFlatCommand(flatRepository,stateRepository)
+            addFlatCommand,
+            flatCommand,
+            startCommand,
+            tenantCommand
         };
     }
 

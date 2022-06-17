@@ -11,7 +11,7 @@ var conn = builder.Configuration;
 builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(conn.GetConnectionString("Postgres")));
 builder.Services
     .AddControllers()
-    .AddNewtonsoftJson();
+    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

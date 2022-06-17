@@ -1,13 +1,13 @@
-﻿using KomunalkaUA.Domain.Interfaces;
+﻿using KomunalkaUA.Domain.Services.CommandService.Interfaces;
 using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using User = KomunalkaUA.Domain.Models.User;
 
-namespace KomunalkaUA.Domain.Commands;
+namespace KomunalkaUA.Domain.Services.CommandService;
 
-public class TenantCommand:ITelegramCommand
+public class TenantCommand:ITenantCommand
 {
     private readonly string _name = "Орендувальник";
     private readonly IRepository<User> _userRepository;

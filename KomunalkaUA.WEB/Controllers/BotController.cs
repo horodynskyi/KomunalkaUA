@@ -68,7 +68,6 @@ public class BotController : Controller
                 catch (ApiRequestException exception)
                 {
                     Console.WriteLine(exception.HttpStatusCode);
-                    throw;
                 }
               
                 await _callBackService.Execute(callback, _client);

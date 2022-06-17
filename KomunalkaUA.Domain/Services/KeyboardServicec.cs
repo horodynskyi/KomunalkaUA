@@ -6,28 +6,13 @@ namespace KomunalkaUA.Domain.Services;
 
 public class KeyboardServicec
 {
-    public static ReplyKeyboardMarkup GetShareContactButton()
-    {
-        
-        var keys = new ReplyKeyboardMarkup(
-            new []
-            {
-                new []
-                {
-                   KeyboardButton.WithRequestContact("Надіслати номер"),
-                }
-            }
-        );
-        keys.ResizeKeyboard = true;
-        keys.Selective = true;
-        keys.OneTimeKeyboard = true;
-        return keys;
-    }
+  
 
     public static InlineKeyboardMarkup CreateListFlatInlineKeyboardMarkup(List<Flat> flats)
     {
         var keys = new InlineKeyboardMarkup(
             flats
+                .Where(x => x.Address != null)
                 .Select(x => InlineKeyboardButton.WithCallbackData($"{x.Address.Street} {x.Address.Building} {x.Address.FlatNumber}",$"flat-detail {x.Id}"))
                 .Chunk(2)
             );
@@ -119,42 +104,9 @@ public class KeyboardServicec
             }
         );
     }
-    public static ReplyKeyboardMarkup GetRolesButtons()
-    {
-        
-        var keys = new ReplyKeyboardMarkup(
-            new []
-            {
-                new []
-                {
-                  new KeyboardButton("Власник"),
-                  new KeyboardButton("Орендувальник")
-                }
-            }
-        );
-        keys.ResizeKeyboard = true;
-        keys.Selective = true;
-        keys.OneTimeKeyboard = true;
-        return keys;
-    }
 
-    public static ReplyKeyboardMarkup GetStartOwnerButtons()
-    {
-        var keys = new ReplyKeyboardMarkup(
-            new []
-            {
-                new []
-                {
-                    new KeyboardButton("Мої квартири"),
-                    new KeyboardButton("Додати квартиру")
-                }
-            }
-        );
-        keys.ResizeKeyboard = true;
-        keys.Selective = true;
-        keys.OneTimeKeyboard = true;
-        return keys;
-    }
+
+    
 
     public static ReplyKeyboardMarkup GetStartTenantButtons()
     {

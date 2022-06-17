@@ -1,5 +1,7 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Models;
+using KomunalkaUA.Domain.Services.KeyboardServices;
+using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.FlatState.Interfaces;
 using KomunalkaUA.Shared;
 using Newtonsoft.Json;
@@ -10,37 +12,43 @@ namespace KomunalkaUA.Domain.Services.StateServices.FlatState;
 
 public class FlatSetAddressState:IFlatSetAddressState
 {
-    private IRepository<Flat> _flatRepository;
-    private IRepository<State> _stateRepository;
+    private readonly IRepository<Flat> _flatRepository;
+    private readonly IRepository<State> _stateRepository;
+    private readonly IKeyboardService _keyboardService;
 
     public FlatSetAddressState(
         IRepository<Flat> flatRepository, 
-        IRepository<State> stateRepository)
+        IRepository<State> stateRepository, 
+        IKeyboardService keyboardService)
     {
         _flatRepository = flatRepository;
         _stateRepository = stateRepository;
+        _keyboardService = keyboardService;
     }
 
     public async Task ExecuteAsync(ITelegramBotClient client, Update update, State state)
     {
         var addressMsg = update.Message.Text.Split();
-        var text = $"Адрес записано\n{ReplyTextService.GetGasStateMessage()}";
+        var text = $"Адрес записано\nДля подальшого користування заповніть інформацію про комунальні послуги:";
         (string street, string building, string flatNumber) = (addressMsg[0], addressMsg[1], addressMsg[2]);
-        var flat = JsonConvert.DeserializeObject<Flat>(state.Value);
-        flat.Address = new()
-        {
-            Building = building,
-            Street = street,
-            FlatNumber = flatNumber
-        };
-        
-        state.StateType = StateType.GasMeter;
-        var entity = await _flatRepository.AddAsync(flat);
-        state.Value = JsonConvert.SerializeObject(entity.Id);
-        await _stateRepository.UpdateAsync(state);
+       // var flat = JsonConvert.DeserializeObject<Flat>(state.Value);
+       var flat = new Flat()
+       {
+           OwnerId = update.Message.From.Id,
+           Address = new()
+           {
+               Building = building,
+               Street = street,
+               FlatNumber = flatNumber
+           }
+       };
+       var entity = await _flatRepository.AddAsync(flat);
+        var keys = _keyboardService.GetKeys(new FlatMeterKeyboardCommand(entity.Id));
+        await _stateRepository.DeleteAsync(state);
         await client.SendTextMessageAsync(
             update.Message.Chat.Id,
-            text);
+            text,
+            replyMarkup:keys);
     }
 
     public bool Contains(StateType stateType)

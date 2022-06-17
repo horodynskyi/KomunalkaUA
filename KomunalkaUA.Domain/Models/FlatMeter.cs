@@ -9,4 +9,5 @@ public class FlatMeter:IAggregateRoot
     public int? MetterId { get; set; }
     public Flat? Flat { get; set; }
     public Meter? Meter { get; set; }
+    public List<Checkout>? Checkouts { get; set; }
 }

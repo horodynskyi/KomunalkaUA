@@ -1,56 +1,67 @@
 ﻿using KomunalkaUA.Domain.Enums;
+using KomunalkaUA.Domain.Extensions;
 using KomunalkaUA.Domain.Models;
+using KomunalkaUA.Domain.Services.KeyboardServices;
+using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.FlatState.Interfaces;
+using KomunalkaUA.Domain.Specifications.MeterSpec;
 using KomunalkaUA.Shared;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace KomunalkaUA.Domain.Services.StateServices.FlatState;
 
-public class FlatSetGasMeterState : IFlatSetGasMeterState
+public class FlatSetMeterState : IFlatSetMeterState
 {
-    private readonly IRepository<FlatMeter> _flatMeterRepository;
+    private readonly IRepository<Meter> _meterRepository;
     private readonly IRepository<State> _stateRepository;
+    private readonly IKeyboardService _keyboardService;
 
-    public FlatSetGasMeterState(
-        IRepository<FlatMeter> flatMeterRepository, 
-        IRepository<State> stateRepository)
+    public FlatSetMeterState(
+        IRepository<Meter> meterRepository, 
+        IRepository<State> stateRepository, 
+        IKeyboardService keyboardService)
     {
-        _flatMeterRepository = flatMeterRepository;
+        _meterRepository = meterRepository;
         _stateRepository = stateRepository;
+        _keyboardService = keyboardService;
     }
 
+    
     public async Task ExecuteAsync(ITelegramBotClient client, Update update, State state)
     {
-        var numberMsg = update.Message.Text.Split();
-        var text = "Введіть номер рахунку і показник води формат:" +
-                   "\nНомер рахунку показник";
-        if (numberMsg.Length != 2)
-        {
-            await client.SendTextMessageAsync(
-                update.Message.Chat.Id,
-                $"Введено некоретно дані!\n{ReplyTextService.GetGasStateMessage()}");
+        var meterId = JsonConvert.DeserializeObject<int>(state.Value);
+        var meter = await _meterRepository.GetByIdAsync(meterId);
+        var meterInclude = await _meterRepository.GetBySpecAsync(new MeterGetFlatByMeterId(meter.Id));
+        var flatId = meterInclude.FlatMeters.FirstOrDefault().FlatId;
+        if (flatId ==null)
             return;
-        }
-        (string number, string value) = (numberMsg[0],  numberMsg[1]);
-        var flatId = JsonConvert.DeserializeObject<int>(state.Value);
-        var meter = new Meter
-        {
-            Number = number,
-            Value = Int32.Parse(value),
-            MeterType = MeterType.Gas
-        };
-        await _flatMeterRepository.AddAsync(new FlatMeter
-        {
-            FlatId = flatId,
-            Meter = meter
-        });
-        state.StateType = StateType.WatterMeter;
-        await _stateRepository.UpdateAsync(state);
+        meter.Number = update.Message.Text;
+        await _meterRepository.UpdateAsync(meter);
         await client.SendTextMessageAsync(
-            update.Message.Chat.Id,
-            text);
+            update.Message.From.Id,
+            "Номер рахунку збережено!"
+            );
+        await _stateRepository.DeleteAsync(state);
+        var meterValueState = new State()
+        {
+            UserId = update.Message.From.Id,
+            Value = JsonConvert.SerializeObject(meterId),
+            StateType = StateType.ValueMeter
+        };
+        await _stateRepository.AddAsync(meterValueState);
+        await client.SendTextMessageAsync(
+            update.Message.From.Id,
+            "Введіть значення показнику:",
+            replyMarkup: InlineKeyboardMarkup.Empty());
+        /*await client.SendTextMessageAsync(
+            update.Message.From.Id,
+            "Заповніть інформацію про показники:",
+            replyMarkup: _keyboardService.GetKeys(new FlatMeterKeyboardCommand((int) flatId))
+        );*/
+
     }
 
     public bool Contains(StateType stateType)

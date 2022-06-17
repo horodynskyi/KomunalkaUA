@@ -7,7 +7,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
+namespace KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
 
 public class FlatAddPhotoCallback:IFlatAddPhotoCallback
 {

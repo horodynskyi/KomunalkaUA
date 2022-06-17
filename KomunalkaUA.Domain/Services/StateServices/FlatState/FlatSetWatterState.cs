@@ -37,7 +37,7 @@ public class FlatSetWatterState : IFlatSetWatterState
         {
             Number = number,
             Value = Int32.Parse(value),
-            MeterType = MeterType.Watter
+         //   MeterType = MeterType.Watter
         };
         await _flatMeterRepository.AddAsync(new FlatMeter
         {

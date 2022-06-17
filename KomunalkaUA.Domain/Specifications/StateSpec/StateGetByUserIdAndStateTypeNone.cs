@@ -8,6 +8,6 @@ public sealed class StateGetByUserIdAndStateTypeNotNone:Specification<State>,ISi
 {
     public StateGetByUserIdAndStateTypeNotNone(long id)
     {
-        Query.Where(x => x.UserId == id && x.StateType != StateType.None);
+        Query.Where(x => x.UserId == id);
     }
 }

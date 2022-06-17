@@ -1,16 +1,14 @@
 ﻿using KomunalkaUA.Domain.Enums;
-using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Shared;
-using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using User = KomunalkaUA.Domain.Models.User;
 
-namespace KomunalkaUA.Domain.Commands;
+namespace KomunalkaUA.Domain.Services.CommandService;
 
-public class StartCommand:ITelegramCommand
+public class StartCommand:IStartCommand
 {
     private readonly string _name = "/start";
     private readonly IRepository<State> _repository;
@@ -43,7 +41,6 @@ public class StartCommand:ITelegramCommand
         }
         var state = new State
         {
-
             UserId = message.Chat.Id,
             StateType = StateType.Registration
         };

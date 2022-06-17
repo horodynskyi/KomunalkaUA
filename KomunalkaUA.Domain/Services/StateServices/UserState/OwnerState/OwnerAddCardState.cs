@@ -1,5 +1,7 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Models;
+using KomunalkaUA.Domain.Services.KeyboardServices;
+using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.UserState.OwnerState.Interfaces;
 using KomunalkaUA.Shared;
 using Newtonsoft.Json;
@@ -13,13 +15,16 @@ public class OwnerAddCardState : IOwnerAddCardState
 {
     private readonly IRepository<Flat> _flatRepository;
     private readonly IRepository<State> _stateRepository;
+    private readonly IKeyboardService _keyboardService;
  
     public OwnerAddCardState(
         IRepository<Flat> flatRepository, 
-        IRepository<State> stateRepository)
+        IRepository<State> stateRepository, 
+        IKeyboardService keyboardService)
     {
         _flatRepository = flatRepository;
         _stateRepository = stateRepository;
+        _keyboardService = keyboardService;
     }
 
     public async Task ExecuteAsync(ITelegramBotClient client, Update update, State state)
@@ -37,7 +42,8 @@ public class OwnerAddCardState : IOwnerAddCardState
                 flat.TenantId,
                 $"Власник відправив вам номер карти!" +
                 $"\n<code>{flat.CardNumber}</code>",
-                ParseMode.Html);
+                ParseMode.Html,
+                replyMarkup:_keyboardService.GetKeys(new TenantCardKeyboardCommand((long) flat.TenantId)));
         }
     }
 

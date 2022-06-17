@@ -1,6 +1,6 @@
 ﻿namespace KomunalkaUA.Domain.Enums;
 
-public enum MeterType
+public enum MeterTypeEnum 
 {
     None = 0,
     Gas =1,

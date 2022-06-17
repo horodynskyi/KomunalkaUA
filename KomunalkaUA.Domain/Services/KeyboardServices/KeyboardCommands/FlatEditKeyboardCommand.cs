@@ -22,7 +22,7 @@ public class FlatEditKeyboardCommand:IKeyboardCommand
             },
             new[]
             {
-                InlineKeyboardButton.WithCallbackData("Адреса ", $"flat-address {_flatId}"),
+                InlineKeyboardButton.WithCallbackData("Адрес", $"flat-address {_flatId}"),
                 InlineKeyboardButton.WithCallbackData("Повернутись", $"flat-detail {_flatId}"),
                 
             }

@@ -23,10 +23,14 @@ public class ListState
         IFlatSetAddressState flatSetAddressState,
         IFlatSetWatterState flatSetWatterState,
         IFlatSetElectricMeterState flatSetElectricMeterState,
-        IFlatSetGasMeterState flatSetGasMeterState,
+        IFlatSetMeterState flatSetGasMeterState,
         ITenantAutorizeFlatState tenantAutorizeFlatState,
         IOwnerAddCardState ownerAddCardState,
-        IFlatRentState flatRentState
+        IFlatRentState flatRentState,
+        IFlatSetStreetState flatSetStreetState,
+        IFlatSetBuildingState flatSetBuildingState,
+        IFlatSetFlatNumberState flatSetFlatNumberState,
+        IFlatValueMeterState flatValueMeterState
     ) 
     {
         _states = new List<IState>()
@@ -40,7 +44,11 @@ public class ListState
             flatSetGasMeterState,
             tenantAutorizeFlatState,
             ownerAddCardState,
-            flatRentState
+            flatRentState,
+            flatSetStreetState,
+            flatSetBuildingState,
+            flatSetFlatNumberState,
+            flatValueMeterState
         };
     }
 

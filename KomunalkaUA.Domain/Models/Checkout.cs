@@ -4,7 +4,10 @@ public class Checkout
 {
     public int Id { get; set; }
     public int? FlatId { get; set; }
-    public int? TariffId { get; set; }
-    public Flat? Flat { get; set; }
-    public Tariff? Tariff { get; set; }
+    public int? FlatMeterId { get; set; }
+    public int? StartValue { get; set; }
+    public int? EndValue { get; set; }
+    public int? Rent { get; set; }
+    public FlatMeter? FlatMeter { get; set; }
+    
 }

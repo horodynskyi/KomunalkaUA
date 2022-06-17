@@ -33,6 +33,9 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.Property<string>("Building")
                         .HasColumnType("text");
 
+                    b.Property<int?>("CityId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("FlatNumber")
                         .HasColumnType("text");
 
@@ -40,6 +43,8 @@ namespace KomunalkaUA.Infrastracture.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Addresses");
                 });
@@ -65,7 +70,19 @@ namespace KomunalkaUA.Infrastracture.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("EndValue")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("FlatId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("FlatMeterId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Rent")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StartValue")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TariffId")
@@ -73,11 +90,44 @@ namespace KomunalkaUA.Infrastracture.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FlatId");
+                    b.HasIndex("FlatMeterId");
 
                     b.HasIndex("TariffId");
 
                     b.ToTable("Checkout");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Чернівці",
+                            Region = "Чернівецький"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Тернопіль",
+                            Region = "Тернопільський"
+                        });
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Flat", b =>
@@ -165,19 +215,56 @@ namespace KomunalkaUA.Infrastracture.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("MeterType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Number")
                         .HasColumnType("text");
+
+                    b.Property<int?>("ProviderId")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("Value")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProviderId");
+
                     b.ToTable("Meters");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.MeterType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeterTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Газ"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Вода"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Світло"
+                        });
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Photo", b =>
@@ -193,6 +280,45 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Provider", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MeterTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("Rate")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("MeterTypeId");
+
+                    b.ToTable("Providers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CityId = 1,
+                            MeterTypeId = 1,
+                            Name = "Нафтогаз",
+                            Rate = 7.9900000000000002
+                        });
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Role", b =>
@@ -298,19 +424,26 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Address", b =>
+                {
+                    b.HasOne("KomunalkaUA.Domain.Models.City", "City")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CityId");
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Checkout", b =>
                 {
-                    b.HasOne("KomunalkaUA.Domain.Models.Flat", "Flat")
+                    b.HasOne("KomunalkaUA.Domain.Models.FlatMeter", "FlatMeter")
                         .WithMany("Checkouts")
-                        .HasForeignKey("FlatId");
+                        .HasForeignKey("FlatMeterId");
 
-                    b.HasOne("KomunalkaUA.Domain.Models.Tariff", "Tariff")
+                    b.HasOne("KomunalkaUA.Domain.Models.Tariff", null)
                         .WithMany("Checkouts")
                         .HasForeignKey("TariffId");
 
-                    b.Navigation("Flat");
-
-                    b.Navigation("Tariff");
+                    b.Navigation("FlatMeter");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Flat", b =>
@@ -364,6 +497,30 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.Navigation("Photo");
                 });
 
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Meter", b =>
+                {
+                    b.HasOne("KomunalkaUA.Domain.Models.Provider", "Provider")
+                        .WithMany("Meters")
+                        .HasForeignKey("ProviderId");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Provider", b =>
+                {
+                    b.HasOne("KomunalkaUA.Domain.Models.City", "City")
+                        .WithMany("Providers")
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("KomunalkaUA.Domain.Models.MeterType", "Type")
+                        .WithMany("Providers")
+                        .HasForeignKey("MeterTypeId");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Type");
+                });
+
             modelBuilder.Entity("KomunalkaUA.Domain.Models.State", b =>
                 {
                     b.HasOne("KomunalkaUA.Domain.Models.User", "User")
@@ -387,13 +544,23 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.Navigation("Flats");
                 });
 
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.City", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Providers");
+                });
+
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Flat", b =>
                 {
-                    b.Navigation("Checkouts");
-
                     b.Navigation("FlatMeters");
 
                     b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.FlatMeter", b =>
+                {
+                    b.Navigation("Checkouts");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Meter", b =>
@@ -401,9 +568,19 @@ namespace KomunalkaUA.Infrastracture.Migrations
                     b.Navigation("FlatMeters");
                 });
 
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.MeterType", b =>
+                {
+                    b.Navigation("Providers");
+                });
+
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Photo", b =>
                 {
                     b.Navigation("FlatPhotos");
+                });
+
+            modelBuilder.Entity("KomunalkaUA.Domain.Models.Provider", b =>
+                {
+                    b.Navigation("Meters");
                 });
 
             modelBuilder.Entity("KomunalkaUA.Domain.Models.Role", b =>

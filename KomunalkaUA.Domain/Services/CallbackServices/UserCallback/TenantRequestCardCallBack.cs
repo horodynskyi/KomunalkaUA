@@ -51,7 +51,7 @@ public class TenantRequestCardCallBack:ITenantRequestCardCallBack
                     $"Картка для оплати:" +
                     $"\n<code>{flat.CardNumber}</code>",
                     ParseMode.Html,
-                    replyMarkup: (InlineKeyboardMarkup) _keyboardService.GetKeys(new TenantStartKeyboardCommand(tenant.Id))
+                    replyMarkup: (InlineKeyboardMarkup) _keyboardService.GetKeys(new TenantCardKeyboardCommand(tenant.Id))
                 );
         }
     }

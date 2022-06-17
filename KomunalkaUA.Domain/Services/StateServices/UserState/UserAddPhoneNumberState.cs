@@ -1,5 +1,7 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Models;
+using KomunalkaUA.Domain.Services.KeyboardServices;
+using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.UserState.Interfaces;
 using KomunalkaUA.Shared;
 using Newtonsoft.Json;
@@ -12,10 +14,14 @@ namespace KomunalkaUA.Domain.Services.StateServices.UserState;
 public class UserAddPhoneNumberState:IUserAddPhoneNumberState
 {
     private IRepository<State> _stateRepository;
+    private readonly IKeyboardService _keyboardService;
 
-    public UserAddPhoneNumberState(IRepository<State> stateRepository)
+    public UserAddPhoneNumberState(
+        IRepository<State> stateRepository,
+        IKeyboardService keyboardService)
     {
         _stateRepository = stateRepository;
+        _keyboardService = keyboardService;
     }
 
     public async Task ExecuteAsync(ITelegramBotClient client, Update update, State state)
@@ -29,7 +35,7 @@ public class UserAddPhoneNumberState:IUserAddPhoneNumberState
         await client.SendTextMessageAsync(
             update.Message.Chat.Id, 
             text, 
-            replyMarkup: KeyboardServicec.GetRolesButtons());
+            replyMarkup: _keyboardService.GetKeys(new UserGetRolesButtonKeyboardCommand()));
     }
 
     public bool Contains(StateType stateType)

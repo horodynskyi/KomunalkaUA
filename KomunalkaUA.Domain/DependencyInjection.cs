@@ -1,22 +1,9 @@
 ﻿using System.Reflection;
-using KomunalkaUA.Domain.Commands;
 using KomunalkaUA.Domain.Interfaces;
-using KomunalkaUA.Domain.Services;
-using KomunalkaUA.Domain.Services.Callback.FlatCallbacks;
-using KomunalkaUA.Domain.Services.Callback.FlatCallbacks.Interfaces;
 using KomunalkaUA.Domain.Services.CallbackServices;
-using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
-using KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
-using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.Lists;
 using KomunalkaUA.Domain.Services.StateServices;
-using KomunalkaUA.Domain.Services.StateServices.FlatState;
-using KomunalkaUA.Domain.Services.StateServices.FlatState.Interfaces;
-using KomunalkaUA.Domain.Services.StateServices.PhotoState;
-using KomunalkaUA.Domain.Services.StateServices.PhotoState.Interfaces;
-using KomunalkaUA.Domain.Services.StateServices.UserState;
-using KomunalkaUA.Domain.Services.StateServices.UserState.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -30,20 +17,13 @@ public static class DependencyInjection
         service.AddTransient<IListCommand, ListCommand>();
         service.AddTransient<IStateService, StateService>();
         service.AddTransient<ICallBackService, CallBackService>();
-        
-        service.AddTransient<ListCallbackServices>();
-        service.AddTransient<ListCallbackServices>();
-        service.AddTransient<ListFlatCallback>();
-        service.AddTransient<ListUserCallback>();
-        service.AddTransient<ListState>();
-        service.AddTransient<IFlatCallBackService, FlatCallbackService>();
-        service.AddTransient<IUserCallbackService, UserCallbackService>();
         service.AddTransient<IKeyboardService, KeyboardService>();
-        service.AddState();
-        service.AddCallback();
-     
-        
-
+        service.AddTransient<ListCallback>();
+        service.AddTransient<ListState>();
+        service
+            .AddState()
+            .AddCallback()
+            .AddCommand();
         return service;
     }
 
@@ -64,13 +44,15 @@ public static class DependencyInjection
                 foreach (var c in classTypesWithState)
                 {
                     if (i.IsAssignableFrom(c))
+                    {
                         service.AddTransient(i,c);
+                    }
                 }
             }
         }
-
         return service;
-    }   
+    }
+    
     public static IServiceCollection AddCommand(this IServiceCollection service)
     {
         var typesWithState  = Assembly
@@ -78,7 +60,7 @@ public static class DependencyInjection
             ?.GetTypes().Where(t => 
                 t.GetInterfaces()
                     .Any(i => 
-           i ==typeof(IState))).ToList();
+           i ==typeof(ITelegramCommand))).ToList();
         if (typesWithState != null)
         {
             var interfaces = typesWithState.Where(x => x.IsInterface).ToList();
@@ -92,7 +74,6 @@ public static class DependencyInjection
                 }
             }
         }
-
         return service;
     }  
     public static IServiceCollection AddCallback(this IServiceCollection service)
@@ -116,6 +97,7 @@ public static class DependencyInjection
                 }
             }
         }
+
         return service;
     }
 }

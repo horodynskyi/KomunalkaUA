@@ -13,5 +13,9 @@ public enum StateType
     AddPhoto,
     TenantAuthorizeFlat,
     AddCardNumber,
-    Rent
+    Rent,
+    FlatStreet,
+    FlatBuilding,
+    FlatFlatNumber,
+    ValueMeter
 }

@@ -7,22 +7,20 @@ namespace KomunalkaUA.Domain.Services.CallbackServices;
 
 public class CallBackService:ICallBackService
 {
-    private ListCallbackServices _callBackServices;
-    public CallBackService(
-        ListCallbackServices callBackServices)
+    private readonly ListCallback _listCallback;
+    public CallBackService(ListCallback listCallback)
     {
-        _callBackServices = callBackServices;
+        _listCallback = listCallback;
     }
 
     public async Task Execute(CallbackQuery callbackQuery, ITelegramBotClient client)
     {
         
-        await _callBackServices.Execute(callbackQuery, client);
+        await _listCallback.ExecuteAsync(callbackQuery, client);
     }
 
     public bool Contains(string callbackData)
     {
-        
-        return _callBackServices.Contains(callbackData);
+        return _listCallback.Contains(callbackData);
     }
 }
