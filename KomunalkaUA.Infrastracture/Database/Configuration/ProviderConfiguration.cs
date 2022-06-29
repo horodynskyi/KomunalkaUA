@@ -29,7 +29,55 @@ public class ProviderConfiguration:IEntityTypeConfiguration<Provider>
                     Name = "Нафтогаз",
                     Rate = 7.99,
                     MeterTypeId = (int) MeterTypeEnum.Gas
-                }
+                },
+                new()
+                {
+                    Id = 2,
+                    CityId = 1,
+                    Name = "ТОВ 'ЧОЕК'",
+                    Rate = 1.70,
+                    MeterTypeId = (int) MeterTypeEnum.Electric
+                },
+                new()
+                {
+                    Id = 3,
+                    CityId = 1,
+                    Name = "Чернівці Водоканал",
+                    Rate = 28,
+                    MeterTypeId = (int) MeterTypeEnum.Watter
+                },
+                new()
+                {
+                    Id = 4,
+                    CityId = 2,
+                    Name = "Газпостач Тернопіль",
+                    Rate = 7.99,
+                    MeterTypeId = (int) MeterTypeEnum.Gas
+                },
+                new()
+                {
+                    Id = 7,
+                    CityId = 2,
+                    Name = "Тернопільоблгаз",
+                    Rate = 7.99,
+                    MeterTypeId = (int) MeterTypeEnum.Gas
+                },
+                new()
+                {
+                    Id = 5,
+                    CityId = 2,
+                    Name = "Тернопільобленерго",
+                    Rate = 1.70,
+                    MeterTypeId = (int) MeterTypeEnum.Electric
+                },
+                new()
+                {
+                    Id = 6,
+                    CityId = 2,
+                    Name = "Тернопільводоканал",
+                    Rate = 28,
+                    MeterTypeId = (int) MeterTypeEnum.Watter
+                },
             });
     }
 }

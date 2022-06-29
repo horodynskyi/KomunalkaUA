@@ -23,8 +23,8 @@ public class CityConfiguration:IEntityTypeConfiguration<City>
                 {
                     Id = 2,
                     Name = "Тернопіль",
-                    Region = "Тернопільський"
-                },
+                    Region = "Чернівецький"
+                }
             });
     }
 }

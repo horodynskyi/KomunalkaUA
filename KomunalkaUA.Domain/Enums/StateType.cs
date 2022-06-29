@@ -17,5 +17,6 @@ public enum StateType
     FlatStreet,
     FlatBuilding,
     FlatFlatNumber,
-    ValueMeter
+    ValueMeter,
+    PreMeterCheckout
 }

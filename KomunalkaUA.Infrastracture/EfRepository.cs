@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Infrastracture.Database;
-using KomunalkaUA.Shared;
 
 namespace KomunalkaUA.Infrastracture;
 

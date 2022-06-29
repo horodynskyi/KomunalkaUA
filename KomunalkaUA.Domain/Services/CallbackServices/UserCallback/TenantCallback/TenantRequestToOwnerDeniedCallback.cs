@@ -1,13 +1,9 @@
-﻿using KomunalkaUA.Domain.Models;
-using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
-using KomunalkaUA.Domain.Services.KeyboardServices;
-using KomunalkaUA.Shared;
+﻿using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
-using User = KomunalkaUA.Domain.Models.User;
 
-namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
+namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback.TenantCallback;
 
 public class TenantRequestToOwnerDeniedCallback:ITenantRequestToOwnerDeniedCallback
 {

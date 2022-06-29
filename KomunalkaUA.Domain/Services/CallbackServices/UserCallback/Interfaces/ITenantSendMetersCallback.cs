@@ -2,6 +2,6 @@
 
 namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
 
-public interface IUserCallbackService:ICallBackService
+public interface ITenantSendMetersCallback:ICallback
 {
 }

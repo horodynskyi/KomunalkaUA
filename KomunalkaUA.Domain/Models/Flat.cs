@@ -1,4 +1,4 @@
-﻿using KomunalkaUA.Shared;
+﻿using KomunalkaUA.Domain.Interfaces;
 
 namespace KomunalkaUA.Domain.Models;
 
@@ -17,4 +17,6 @@ public class Flat : IAggregateRoot
     public Address? Address { get; set; }
     public List<FlatMeter>? FlatMeters { get; set; }
     public List<FlatPhoto>? Photos { get; set; }
+    public List<PreMeterCheckout>? PreMeterCheckouts { get; set; }
+    public List<Checkout>? Checkouts { get; set; }
 }

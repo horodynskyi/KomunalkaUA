@@ -23,6 +23,7 @@ public class OwnerFlatDetailKeyboardCommand : IKeyboardCommand
                 },
                 new []
                 {
+                    InlineKeyboardButton.WithCallbackData($"Виписки",$"flat-list-checkouts {_flatId}"),
                     InlineKeyboardButton.WithCallbackData($"Повернутись до квартир",$"flat-list"),
                 }
               

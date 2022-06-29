@@ -1,9 +1,9 @@
 ﻿using KomunalkaUA.Domain.Interfaces;
-using KomunalkaUA.Domain.Services.Callback.FlatCallbacks.Interfaces;
 using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks;
 using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks.Interfaces;
-using KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
 using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
+using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.OwnerCallback;
+using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.TenantCallback;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -42,7 +42,19 @@ public class ListCallback
         IFlatWatterMeterCallback flatWatterMeterCallback,
         IFlatElectricalMeterCallback flatElectricalMeterCallback,
         IFlatMeterEditCallback flatMeterEditCallback,
-        IFlatMeterValueEditCallback flatMeterValueEditCallback)
+        IFlatMeterValueEditCallback flatMeterValueEditCallback,
+        ITenantSendMetersCallback tenantSendMetersCallback,
+        ITenantSendGasMeterCallback tenantSendGasMeterCallback,
+        ITenantSendWatterMeterCallback tenantSendWatterMeterCallback,
+        ITenantSendElectricalMeterCallback tenantSendElectricalMeterCallback,
+        IOwnerAccessPreMetersCheckoutCallback ownerAccessPreMetersCheckoutCallback,
+        IFlatListCheckoutsCallback flatListCheckoutsCallback,
+        IFlatCheckoutCallback checkoutDetailCallback,
+        IFlatCheckoutDetailCallback flatCheckoutDetailCallback,
+        ITenantListCheckoutCallback tenantListCheckoutCallback,
+        ITenantCheckoutCallback tenantCheckoutCallback,
+        ITenantCheckoutDetailCallback tenantCheckoutDetailCallback,
+        IFlatAddCardCallback flatAddCardCallback)
     {
         _callbacks = new List<ICallback>()
         {
@@ -74,7 +86,19 @@ public class ListCallback
             flatWatterMeterCallback,
             flatElectricalMeterCallback,
             flatMeterEditCallback,
-            flatMeterValueEditCallback
+            flatMeterValueEditCallback,
+            tenantSendMetersCallback,
+            tenantSendGasMeterCallback,
+            tenantSendWatterMeterCallback,
+            tenantSendElectricalMeterCallback,
+            ownerAccessPreMetersCheckoutCallback,
+            flatListCheckoutsCallback,
+            checkoutDetailCallback,
+            flatCheckoutDetailCallback,
+            tenantListCheckoutCallback,
+            tenantCheckoutCallback,
+            tenantCheckoutDetailCallback,
+            flatAddCardCallback
         };
     }
 
@@ -100,7 +124,6 @@ public class ListCallback
                 Console.WriteLine(e);
                
             }
-            
         }
         return false;
     }

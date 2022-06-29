@@ -1,4 +1,4 @@
-﻿namespace KomunalkaUA.Shared;
+﻿namespace KomunalkaUA.Domain.Interfaces;
 
 public interface IAggregateRoot
 {

@@ -1,9 +1,9 @@
 ﻿using KomunalkaUA.Domain.Enums;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
-using KomunalkaUA.Shared;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -11,6 +11,9 @@ using Telegram.Bot.Types.Enums;
 
 namespace KomunalkaUA.Domain.Services.StateServices.FlatState;
 
+public interface IFlatRentState:IState
+{
+}
 public class FlatRentState:IFlatRentState
 {
     private readonly IRepository<Flat> _flatRepository;
@@ -58,6 +61,3 @@ public class FlatRentState:IFlatRentState
     }
 }
 
-public interface IFlatRentState:IState
-{
-}

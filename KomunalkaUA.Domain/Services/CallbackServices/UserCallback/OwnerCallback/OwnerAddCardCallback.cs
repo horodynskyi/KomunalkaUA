@@ -1,14 +1,12 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
-using KomunalkaUA.Domain.Services.KeyboardServices;
-using KomunalkaUA.Shared;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
+namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback.OwnerCallback;
 
 public class OwnerAddCardCallback:IOwnerAddCardCallback
 {

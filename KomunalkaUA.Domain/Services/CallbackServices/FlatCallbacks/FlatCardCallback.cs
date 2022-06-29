@@ -1,8 +1,8 @@
-﻿using KomunalkaUA.Domain.Models;
+﻿using KomunalkaUA.Domain.Interfaces;
+using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks.Interfaces;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -43,7 +43,7 @@ public class FlatCardCallback:IFlatCardCallback
             await client.EditMessageTextAsync(
                 callbackQuery.From.Id,
                 callbackQuery.Message.MessageId,
-                $"Ваща карта:" +
+                $"Ваша карта:" +
                 $"\n<code>{flat.CardNumber}</code>",
                 ParseMode.Html,
                 replyMarkup: (InlineKeyboardMarkup) _keyboardService.GetKeys(

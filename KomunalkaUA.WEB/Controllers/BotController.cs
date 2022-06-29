@@ -1,9 +1,11 @@
 ﻿using KomunalkaUA.Domain.Interfaces;
+using KomunalkaUA.Domain.Services.CommandService;
 using KomunalkaUA.Domain.Services.StateServices;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace KomunalkaUA.WEB.Controllers;
 
@@ -12,19 +14,19 @@ namespace KomunalkaUA.WEB.Controllers;
 public class BotController : Controller
 {
     private readonly ITelegramBotClient _client;
-    private readonly IListCommand _listCommand;
+    private readonly ICommandService _commandService;
     private readonly IStateService _stateService;
     private readonly ICallBackService _callBackService;
     public BotController(
         ITelegramBotClient client,
-        IListCommand listCommand, 
         IStateService stateService, 
-        ICallBackService callBackService)
+        ICallBackService callBackService, ICommandService commandService)
     {
         _client = client;
-        _listCommand = listCommand;
+        
         _stateService = stateService;
         _callBackService = callBackService;
+        _commandService = commandService;
     }
     [HttpGet]
     public IActionResult Get()
@@ -36,18 +38,20 @@ public class BotController : Controller
     public async Task<IActionResult> Post([FromBody]Update? update)
     {
         if (update == null) return Ok();
+       
         if (update.Message != null && (update.Message.Chat.Id==632067948 ||update.Message.Chat.Id == 470696076))
         {
             await _client.SendTextMessageAsync(update.Message.Chat.Id, "Маєш гарний хуй");
             return Ok();
         }
+        
         var message = update.Message;
         var callback = update.CallbackQuery;
         if (message != null)
         {
-            if (_listCommand.Contains(message))
+            if (_commandService.Contains(message))
             {
-                await _listCommand.Execute(message,_client);
+                await _commandService.Execute(message,_client);
             }
             else if (await _stateService.Contains(update))
             {
@@ -61,19 +65,10 @@ public class BotController : Controller
         {
             if (_callBackService.Contains(callback.Data))
             {
-                try
-                {
-                    await _client.AnswerCallbackQueryAsync(callback.Id);
-                }
-                catch (ApiRequestException exception)
-                {
-                    Console.WriteLine(exception.HttpStatusCode);
-                }
-              
                 await _callBackService.Execute(callback, _client);
             }
         }
               
-        return Ok();
+        return Ok(message);
     }
 }

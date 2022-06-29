@@ -13,16 +13,15 @@ public class ListCommand:IListCommand
     public ListCommand(
         IAddFlatCommand addFlatCommand,
         IFlatCommand flatCommand,
-        IStartCommand startCommand,
-        ITenantCommand tenantCommand
+        IStartCommand startCommand
+        
         )
     {
         _commands = new List<ITelegramCommand>
         {
             addFlatCommand,
             flatCommand,
-            startCommand,
-            tenantCommand
+            startCommand
         };
     }
 
@@ -39,7 +38,7 @@ public class ListCommand:IListCommand
         return false;
     }
 
-    public async Task Execute(Message message, ITelegramBotClient client)
+    public async Task ExecuteAsync(Message message, ITelegramBotClient client)
     {
         await _currentCommand.Execute(message, client);
     }

@@ -7,5 +7,4 @@ public class Tariff
     public double? Gas { get; set; }
     public double? Electric { get; set; }
     public int RentRate { get; set; }
-    public List<Checkout> Checkouts { get; set; }
 }

@@ -1,11 +1,11 @@
 ﻿using KomunalkaUA.Domain.Enums;
 using KomunalkaUA.Domain.Extensions;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.FlatState.Interfaces;
 using KomunalkaUA.Domain.Specifications.MeterSpec;
-using KomunalkaUA.Shared;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -16,17 +16,20 @@ namespace KomunalkaUA.Domain.Services.StateServices.FlatState;
 public class FlatSetMeterState : IFlatSetMeterState
 {
     private readonly IRepository<Meter> _meterRepository;
+    private readonly IRepository<FlatMeter> _flatMeterRepository;
     private readonly IRepository<State> _stateRepository;
     private readonly IKeyboardService _keyboardService;
 
     public FlatSetMeterState(
         IRepository<Meter> meterRepository, 
         IRepository<State> stateRepository, 
-        IKeyboardService keyboardService)
+        IKeyboardService keyboardService, 
+        IRepository<FlatMeter> flatMeterRepository)
     {
         _meterRepository = meterRepository;
         _stateRepository = stateRepository;
         _keyboardService = keyboardService;
+        _flatMeterRepository = flatMeterRepository;
     }
 
     
@@ -34,8 +37,8 @@ public class FlatSetMeterState : IFlatSetMeterState
     {
         var meterId = JsonConvert.DeserializeObject<int>(state.Value);
         var meter = await _meterRepository.GetByIdAsync(meterId);
-        var meterInclude = await _meterRepository.GetBySpecAsync(new MeterGetFlatByMeterId(meter.Id));
-        var flatId = meterInclude.FlatMeters.FirstOrDefault().FlatId;
+        var meterInclude = await _flatMeterRepository.GetBySpecAsync(new MeterGetFlatByMeterId(meter.Id));
+        var flatId = meterInclude.FlatId;
         if (flatId ==null)
             return;
         meter.Number = update.Message.Text;

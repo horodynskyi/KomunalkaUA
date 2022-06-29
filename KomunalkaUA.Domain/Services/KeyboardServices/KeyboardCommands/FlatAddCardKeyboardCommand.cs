@@ -19,7 +19,7 @@ public class FlatAddCardKeyboardCommand:IKeyboardCommand
         {
             new[]
             {
-                InlineKeyboardButton.WithCallbackData(_text, $"edididiididid"),
+                InlineKeyboardButton.WithCallbackData(_text, $"flat-add-card {_flatId}"),
             },
             new[]
             {

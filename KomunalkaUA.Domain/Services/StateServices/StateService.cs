@@ -4,7 +4,6 @@ using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.Lists;
 using KomunalkaUA.Domain.Services.StateServices.UserState;
 using KomunalkaUA.Domain.Specifications.StateSpec;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 

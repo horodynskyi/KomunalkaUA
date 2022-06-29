@@ -4,13 +4,12 @@ using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
 using KomunalkaUA.Domain.Specifications.StateSpec;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using User = KomunalkaUA.Domain.Models.User;
 
-namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
+namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback.OwnerCallback;
 
 public class OwnerChooseFlatToAutorizeCallback:IOwnerChooseFlatToAutorizeCallback
 {
@@ -41,7 +40,7 @@ public class OwnerChooseFlatToAutorizeCallback:IOwnerChooseFlatToAutorizeCallbac
         flat.TenantId = tenantId;
         await _flatRepository.UpdateAsync(flat);
         await _stateRepository.DeleteAsync(await _stateRepository.GetBySpecAsync(new StateGetByUserIdAndStateTypeNotNone(tenantId)));
-        var keys = (InlineKeyboardMarkup) _keyboardService.GetKeys(new TenantFlatKeyboardCommand(tenant.Id));
+        var keys = (InlineKeyboardMarkup) _keyboardService.GetKeys(new TenantFlatKeyboardCommand(tenant.Id,flat.Id));
         await SendToTenant(client, tenantId, flat, keys);
         await client.EditMessageTextAsync(
             callbackQuery.From.Id,

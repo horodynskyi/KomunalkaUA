@@ -6,9 +6,11 @@ namespace KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 public class TenantFlatKeyboardCommand:IKeyboardCommand
 {
     private long _tenantId;
-    public TenantFlatKeyboardCommand(long tenantId)
+    private int _flatId;
+    public TenantFlatKeyboardCommand(long tenantId, int flatId)
     {
         _tenantId = tenantId;
+        _flatId = flatId;
     }
 
     public IReplyMarkup Get()
@@ -17,7 +19,11 @@ public class TenantFlatKeyboardCommand:IKeyboardCommand
         {
             new []
             {
-                InlineKeyboardButton.WithCallbackData($"Відправити показники",$"tenant-send-watter-meter {_tenantId}"), 
+                InlineKeyboardButton.WithCallbackData($"Відправити показники",$"tenant-send-meters {_tenantId}"), 
+                InlineKeyboardButton.WithCallbackData($"Виписки",$"tenant-list-checkout {_flatId}"), 
+            },
+            new []
+            {
                 InlineKeyboardButton.WithCallbackData($"Отримати карту для оплати",$"tenant-request-card {_tenantId}"), 
             }
         });

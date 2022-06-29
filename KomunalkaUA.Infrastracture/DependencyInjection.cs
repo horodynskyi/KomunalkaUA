@@ -1,4 +1,4 @@
-﻿using KomunalkaUA.Shared;
+﻿using KomunalkaUA.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KomunalkaUA.Infrastracture;

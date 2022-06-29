@@ -30,7 +30,8 @@ public class ListState
         IFlatSetStreetState flatSetStreetState,
         IFlatSetBuildingState flatSetBuildingState,
         IFlatSetFlatNumberState flatSetFlatNumberState,
-        IFlatValueMeterState flatValueMeterState
+        IFlatValueMeterState flatValueMeterState,
+        ITenantSetPreMeterCheckoutState tenantSetPreMeterCheckoutState
     ) 
     {
         _states = new List<IState>()
@@ -48,7 +49,8 @@ public class ListState
             flatSetStreetState,
             flatSetBuildingState,
             flatSetFlatNumberState,
-            flatValueMeterState
+            flatValueMeterState,
+            tenantSetPreMeterCheckoutState
         };
     }
 

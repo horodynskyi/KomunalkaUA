@@ -1,4 +1,4 @@
-﻿using KomunalkaUA.Shared;
+﻿using KomunalkaUA.Domain.Interfaces;
 
 namespace KomunalkaUA.Domain.Models;
 

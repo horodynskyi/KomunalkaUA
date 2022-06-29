@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Services.CallbackServices;
+using KomunalkaUA.Domain.Services.CommandService;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.Lists;
 using KomunalkaUA.Domain.Services.StateServices;
@@ -18,6 +19,7 @@ public static class DependencyInjection
         service.AddTransient<IStateService, StateService>();
         service.AddTransient<ICallBackService, CallBackService>();
         service.AddTransient<IKeyboardService, KeyboardService>();
+        service.AddTransient<ICommandService, CommandService>();
         service.AddTransient<ListCallback>();
         service.AddTransient<ListState>();
         service

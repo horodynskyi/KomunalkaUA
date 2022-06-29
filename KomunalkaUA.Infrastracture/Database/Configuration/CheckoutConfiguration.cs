@@ -1,6 +1,7 @@
 ﻿using KomunalkaUA.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NodaTime;
 
 namespace KomunalkaUA.Infrastracture.Database.Configuration;
 
@@ -11,8 +12,11 @@ public class CheckoutConfiguration:IEntityTypeConfiguration<Checkout>
         builder
             .HasKey(x => x.Id);
         builder
-            .HasOne(x => x.FlatMeter)
+            .HasOne(x => x.Flat)
             .WithMany(x => x.Checkouts)
-            .HasForeignKey(x => x.FlatMeterId);
+            .HasForeignKey(x => x.FlatId);
+        builder
+            .Property(x => x.Date)
+            .HasDefaultValue(SystemClock.Instance.GetCurrentInstant());
     }
 }

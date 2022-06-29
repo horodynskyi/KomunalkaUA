@@ -1,16 +1,16 @@
-﻿using KomunalkaUA.Domain.Models;
+﻿using KomunalkaUA.Domain.Interfaces;
+using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using User = KomunalkaUA.Domain.Models.User;
 
-namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
+namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback.TenantCallback;
 
 public class TenantRequestCardCallBack:ITenantRequestCardCallBack
 {

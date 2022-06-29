@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using KomunalkaUA.Domain.Enums;
-using KomunalkaUA.Shared;
+using KomunalkaUA.Domain.Interfaces;
 
 namespace KomunalkaUA.Domain.Models;
 

@@ -3,11 +3,12 @@ using KomunalkaUA.Domain.Models;
 
 namespace KomunalkaUA.Domain.Specifications.MeterSpec;
 
-public class MeterGetFlatByMeterId:Specification<Meter>,ISingleResultSpecification<Meter>
+public class MeterGetFlatByMeterId:Specification<FlatMeter>,ISingleResultSpecification<FlatMeter>
 {
     public MeterGetFlatByMeterId(int meterId)
     {
         Query
-            .Include(x => x.FlatMeters);
+            .Where(x => x.MetterId==meterId)
+            .Include(x => x.Flat);
     }
 }

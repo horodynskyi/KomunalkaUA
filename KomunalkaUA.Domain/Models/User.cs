@@ -1,4 +1,4 @@
-﻿using KomunalkaUA.Shared;
+﻿using KomunalkaUA.Domain.Interfaces;
 
 namespace KomunalkaUA.Domain.Models;
 
@@ -13,4 +13,5 @@ public class User:IAggregateRoot
     public Role? Role { get; set; }
     public List<Flat> Owners { get; set; }
     public List<Flat> Tenants { get; set; }
+    public List<PreMeterCheckout>? PreMeterCheckouts { get; set; }
 }

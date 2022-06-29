@@ -1,10 +1,10 @@
 ﻿using KomunalkaUA.Domain.Extensions;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks.Interfaces;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;

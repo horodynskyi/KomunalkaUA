@@ -29,6 +29,8 @@ public class DataContext:DbContext
     public DbSet<Provider> Providers { get; set; }
     public DbSet<City> Cities { get; set; }
     public DbSet<MeterType> MeterTypes { get; set; }
+    public DbSet<PreMeterCheckout> PreMeterCheckouts { get; set; }
+    public DbSet<CheckoutPreMeterCheckout> CheckoutPreMeterCheckouts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         
@@ -47,9 +49,12 @@ public class DataContext:DbContext
         modelBuilder.ApplyConfiguration(new CityConfiguration());
         modelBuilder.ApplyConfiguration(new ProviderConfiguration());
         modelBuilder.ApplyConfiguration(new MeterTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new PreMeterCheckoutConfiguration());
+        modelBuilder.ApplyConfiguration(new CheckoutPreMeterCheckoutConfiguration());
+        
     }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
           optionsBuilder.EnableSensitiveDataLogging();
-      }
+      }*/
 }

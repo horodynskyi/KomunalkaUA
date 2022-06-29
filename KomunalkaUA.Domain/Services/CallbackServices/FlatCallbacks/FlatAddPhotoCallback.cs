@@ -1,7 +1,7 @@
 ﻿using KomunalkaUA.Domain.Enums;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
-using KomunalkaUA.Domain.Services.Callback.FlatCallbacks.Interfaces;
-using KomunalkaUA.Shared;
+using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks.Interfaces;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;

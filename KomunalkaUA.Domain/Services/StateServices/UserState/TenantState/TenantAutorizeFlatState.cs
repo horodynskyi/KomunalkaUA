@@ -1,9 +1,9 @@
 ﻿using KomunalkaUA.Domain.Enums;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Specifications.StateSpec;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using User = KomunalkaUA.Domain.Models.User;

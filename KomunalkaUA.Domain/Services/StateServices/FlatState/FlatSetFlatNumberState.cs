@@ -1,10 +1,10 @@
 ﻿using KomunalkaUA.Domain.Enums;
+using KomunalkaUA.Domain.Interfaces;
 using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Services.StateServices.FlatState.Interfaces;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
-using KomunalkaUA.Shared;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;

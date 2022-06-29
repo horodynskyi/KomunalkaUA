@@ -8,7 +8,8 @@ using Telegram.Bot;
 
 var builder = WebApplication.CreateBuilder(args);
 var conn = builder.Configuration;
-builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(conn.GetConnectionString("Postgres")));
+builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(conn.GetConnectionString("Postgres"),
+    o => o.UseNodaTime()));
 builder.Services
     .AddControllers()
     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

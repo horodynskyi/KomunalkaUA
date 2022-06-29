@@ -1,6 +1,6 @@
-﻿using KomunalkaUA.Domain.Services.Callback.FlatCallbacks.Interfaces;
+﻿using KomunalkaUA.Domain.Interfaces;
+using KomunalkaUA.Domain.Services.CallbackServices.FlatCallbacks.Interfaces;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 

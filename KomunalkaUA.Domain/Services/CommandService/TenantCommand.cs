@@ -1,5 +1,5 @@
-﻿using KomunalkaUA.Domain.Services.CommandService.Interfaces;
-using KomunalkaUA.Shared;
+﻿using KomunalkaUA.Domain.Interfaces;
+using KomunalkaUA.Domain.Services.CommandService.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;

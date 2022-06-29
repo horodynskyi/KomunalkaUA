@@ -1,14 +1,14 @@
-﻿using KomunalkaUA.Domain.Models;
+﻿using KomunalkaUA.Domain.Interfaces;
+using KomunalkaUA.Domain.Models;
 using KomunalkaUA.Domain.Services.CallbackServices.UserCallback.Interfaces;
 using KomunalkaUA.Domain.Services.KeyboardServices;
 using KomunalkaUA.Domain.Services.KeyboardServices.KeyboardCommands;
 using KomunalkaUA.Domain.Specifications.FlatSpec;
-using KomunalkaUA.Shared;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback;
+namespace KomunalkaUA.Domain.Services.CallbackServices.UserCallback.TenantCallback;
 
 public class TenantStartCallback : ITenantStartCallback
 {
@@ -31,7 +31,7 @@ public class TenantStartCallback : ITenantStartCallback
             callbackQuery.From.Id, 
             callbackQuery.Message.MessageId,
             $"Ваша квартира {flat.Address.Street} {flat.Address.Building} {flat.Address.FlatNumber}:",
-            replyMarkup: (InlineKeyboardMarkup)_keyboardService.GetKeys(new TenantFlatKeyboardCommand(callbackQuery.From.Id)));
+            replyMarkup: (InlineKeyboardMarkup)_keyboardService.GetKeys(new TenantFlatKeyboardCommand(callbackQuery.From.Id,flat.Id)));
     }
 
     public bool Contains(string callbackData)

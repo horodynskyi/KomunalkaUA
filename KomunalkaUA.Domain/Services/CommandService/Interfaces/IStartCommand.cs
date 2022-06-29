@@ -1,6 +1,6 @@
 ﻿using KomunalkaUA.Domain.Interfaces;
 
-namespace KomunalkaUA.Domain.Services.CommandService;
+namespace KomunalkaUA.Domain.Services.CommandService.Interfaces;
 
 public interface IStartCommand:ITelegramCommand
 {
